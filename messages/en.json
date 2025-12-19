@@ -1,0 +1,327 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "search": "Search",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "confirm": "Confirm",
+        "close": "Close",
+        "actions": "Actions"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "leaderboard": "Leaderboard",
+        "players": "Players",
+        "courses": "Courses",
+        "tournaments": "Tournaments",
+        "registrations": "Tournament Registrations",
+        "register": "Register",
+        "myTournaments": "My Tournaments",
+        "profile": "Profile",
+        "logout": "Logout",
+        "adminSystem": "System Tools"
+    },
+    "home": {
+        "news": {
+            "latestNews": "Latest Golf News",
+            "readMore": "Read More"
+        },
+        "loginOrRegister": "Login / Register with LINE",
+        "leaderboard": {
+            "title": "Current Standings",
+            "currentStandings": "Current Standings",
+            "waitingForSeason": "Waiting for New Season",
+            "join": "Join"
+        },
+        "features": {
+            "scoring": {
+                "title": "Live Scoring",
+                "desc": "PGA-style live leaderboards that update instantly as you play. Support for Stroke Play, Stableford, and more."
+            },
+            "login": {
+                "title": "Easy Login",
+                "desc": "Seamless one-click access via LINE Login. No complicated passwords to remember."
+            },
+            "registration": {
+                "title": "Smart Registration",
+                "desc": "Join tournaments in seconds. Track your registration status and team pairings automatically."
+            },
+            "analytics": {
+                "title": "Real-time Stats",
+                "desc": "View detailed pars, distances, and hole-by-hole analytics for every course."
+            },
+            "multilang": {
+                "title": "Multi-Language",
+                "desc": "Built for everyone with full native support for both Thai and English interfaces."
+            },
+            "cloud": {
+                "title": "Secure Cloud",
+                "desc": "Your data is safely stored and synchronized instantly via Google Sheets integration."
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome back, {name}!",
+        "welcomeGuest": "Welcome to NBK Golf!",
+        "stats": {
+            "totalPlayers": "Total Players",
+            "activeCourses": "Active Courses",
+            "tournaments": "Tournaments",
+            "pendingRegistrations": "Pending Registrations"
+        },
+        "recentRegistrations": "Recent Registrations",
+        "quickActions": "Quick Actions",
+        "addNewPlayer": "Add New Player",
+        "createTournament": "Create Tournament",
+        "manageCourses": "Manage Courses",
+        "noRecentRegistrations": "No recent registrations",
+        "participantMessage": "You are logged in as a participant. Check upcoming tournaments to register.",
+        "registerForTournament": "Register for Tournament",
+        "profileRequiredRedirect": "Please complete your profile to continue.",
+        "registrations": {
+            "title": "Tournament Registrations"
+        }
+    },
+    "players": {
+        "title": "Players Management",
+        "addNew": "Add New Player",
+        "editPlayer": "Edit Player",
+        "deletePlayer": "Delete Player",
+        "confirmDelete": "Are you sure you want to delete {name}?",
+        "playerDeleted": "Player deleted successfully",
+        "playerUpdated": "Player updated successfully",
+        "playerAdded": "Player added successfully",
+        "fields": {
+            "name": "Name",
+            "handicap": "Handicap",
+            "team": "Team",
+            "lineUserId": "Line User ID"
+        },
+        "noPlayers": "No players found"
+    },
+    "courses": {
+        "title": "Courses Management",
+        "addNew": "Add New Course",
+        "editCourse": "Edit Course",
+        "deleteCourse": "Delete Course",
+        "confirmDelete": "Are you sure you want to delete {name}?",
+        "courseDeleted": "Course deleted successfully",
+        "courseUpdated": "Course updated successfully",
+        "courseAdded": "Course added successfully",
+        "fields": {
+            "name": "Course Name",
+            "pars": "Pars (18 holes)",
+            "distances": "Distances (18 holes)"
+        },
+        "noCourses": "No courses found",
+        "holes": "Holes"
+    },
+    "tournaments": {
+        "title": "Tournaments Management",
+        "addNew": "Create Tournament",
+        "editTournament": "Edit Tournament",
+        "deleteTournament": "Delete Tournament",
+        "confirmDelete": "Are you sure you want to delete {name}?",
+        "tournamentDeleted": "Tournament deleted successfully",
+        "tournamentUpdated": "Tournament updated successfully",
+        "tournamentAdded": "Tournament created successfully",
+        "playerAdded": "Player added successfully",
+        "fields": {
+            "name": "Tournament Name",
+            "date": "Date",
+            "course": "Course",
+            "status": "Status",
+            "scoringSystem": "Scoring System"
+        },
+        "status": {
+            "upcoming": "Upcoming",
+            "active": "Active",
+            "completed": "Completed"
+        },
+        "noTournaments": "No tournaments found",
+        "backToTournaments": "Back to Tournaments",
+        "selectPlayer": "Select Player",
+        "addPlayer": "Add Player",
+        "player": "Player",
+        "total": "Total",
+        "noPlayersAdded": "No players added yet",
+        "notFound": "Tournament not found",
+        "scoringSystem": {
+            "stroke": "Stroke Play",
+            "stableford": "Stableford",
+            "36system": "36 System",
+            "callaway": "Callaway"
+        }
+    },
+    "leaderboard": {
+        "title": "Leaderboard",
+        "gross": "Gross",
+        "net": "Net",
+        "pos": "Pos",
+        "player": "Player",
+        "thru": "Thru",
+        "total": "Total",
+        "hcp": "Hcp",
+        "loading": "Loading...",
+        "noScores": "No scores recorded yet.",
+        "averageGross": "Average Gross",
+        "averageNet": "Average Net",
+        "totalPlayers": "Total Players",
+        "points": "Points"
+    },
+    "registrations": {
+        "title": "Registrations Management",
+        "updateStatus": "Update Status",
+        "deleteRegistration": "Delete Registration",
+        "confirmDelete": "Are you sure you want to delete this registration?",
+        "registrationDeleted": "Registration deleted successfully",
+        "registrationUpdated": "Registration updated successfully",
+        "updateFailed": "Failed to update registration",
+        "fields": {
+            "playerName": "Player Name",
+            "email": "Email",
+            "phone": "Phone",
+            "tournament": "Tournament",
+            "status": "Status"
+        },
+        "status": {
+            "pending": "Pending",
+            "paid": "Paid"
+        },
+        "noRegistrations": "No registrations found",
+        "filterByTournament": "Filter by Tournament",
+        "allTournaments": "All Tournaments"
+    },
+    "register": {
+        "title": "Tournament Registration",
+        "subtitle": "Join our upcoming events",
+        "selectTournament": "Select Tournament",
+        "playerInfo": "Player Information",
+        "submit": "Register Now",
+        "submitting": "Registering...",
+        "success": "Registration Successful!",
+        "successMessage": "Thank you for registering. We will contact you shortly with payment details.",
+        "registerAnother": "Register Another",
+        "error": "Registration failed. Please try again.",
+        "noTournaments": "No upcoming tournaments",
+        "loading": "Loading...",
+        "fields": {
+            "tournament": "Select Tournament",
+            "name": "Full Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "lineId": "Line ID (Optional)",
+            "team": "Team Name"
+        },
+        "teamPlaceholder": "Enter your team name",
+        "loggedInAs": "Registering as",
+        "alreadyRegistered": "You are already registered for this tournament",
+        "successMessageMember": "Registration successful! Redirecting to your tournaments..."
+    },
+    "profile": {
+        "title": "My Profile",
+        "editProfile": "Edit Profile",
+        "completeProfile": "Complete Your Profile",
+        "updateInfo": "Update your personal information and handicap.",
+        "provideDetails": "Please provide your details to continue to the dashboard.",
+        "fields": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "handicap": "Handicap",
+            "team": "Team (Optional)"
+        },
+        "save": "Save Changes",
+        "createProfile": "Create Profile & Continue",
+        "saving": "Saving...",
+        "success": "Profile updated successfully!",
+        "error": "Failed to update profile. Please try again."
+    },
+    "auth": {
+        "login": "Login with Line",
+        "loginRequired": "Please login to continue",
+        "adminOnly": "Admin access required",
+        "checkingPermissions": "Checking permissions..."
+    },
+    "myTournaments": {
+        "title": "My Tournaments",
+        "subtitle": "Manage your tournament registrations",
+        "noTournaments": "No tournaments yet",
+        "noTournamentsDesc": "You haven't joined any tournaments yet. Register now!",
+        "registerNow": "Register for Tournament",
+        "changeTeam": "Change Team",
+        "enterTeam": "Enter team name",
+        "noTeam": "No team selected",
+        "withdraw": "Withdraw",
+        "confirmWithdraw": "Are you sure you want to withdraw from this tournament?",
+        "teamUpdated": "Team updated successfully",
+        "updateFailed": "Failed to update",
+        "withdrawSuccess": "Successfully withdrawn from tournament",
+        "withdrawFailed": "Failed to withdraw",
+        "profileRequired": "Profile Required",
+        "profileRequiredDesc": "You need to complete your profile before managing your tournament registrations."
+    },
+    "checkStatus": {
+        "title": "Check Registration Status",
+        "subtitle": "Enter your email or phone number to check your status",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "or": "OR",
+        "search": "Check Status",
+        "searching": "Checking...",
+        "resultsTitle": "Found {count} Registration(s)",
+        "noResults": "No registrations found. Please check your details or register anew.",
+        "backToRegister": "Back to Registration",
+        "validationError": "Please enter either email or phone number",
+        "error": "An error occurred. Please try again."
+    },
+    "adminTools": {
+        "title": "System Maintenance Tools",
+        "subtitle": "Advanced controls for system data integrity and configuration.",
+        "sync": {
+            "title": "Sync Missing Data",
+            "desc": "Automatically links Guest registrations to Member profiles based on Email/Phone. Also synchronizes Team names across registrations.",
+            "button": "Run Sync"
+        },
+        "headers": {
+            "title": "Fix Sheet Headers",
+            "desc": "Repairs Google Sheet column headers to match the latest application schema. Use this if you see data in wrong columns.",
+            "button": "Fix Headers"
+        },
+        "validate": {
+            "title": "System Health Check",
+            "desc": "Runs a safe End-to-End simulation (Create -> Register -> Score -> Delete) to verify that the API and Database are working correctly.",
+            "button": "Run Health Check"
+        },
+        "reset": {
+            "title": "Reset Database",
+            "desc": "⚠️ DANGER: Wipes ALL data from Players, Tournaments, and Scores. This action cannot be undone. Use only for fresh starts.",
+            "button": "Reset All Data",
+            "confirm": "Are you sure you want to WIPe ALL DATA?",
+            "confirm2": "Type DELETE to confirm"
+        },
+        "migrate": {
+            "title": "Migrate Scores",
+            "desc": "Convert legacy vertical score format to new horizontal format.",
+            "button": "Run Migration"
+        },
+        "courses": {
+            "title": "Fix Course Distances",
+            "desc": "Repair corrupted distance data by forcing text format.",
+            "button": "Fix Courses"
+        },
+        "console": {
+            "title": "Operation Log",
+            "ready": "Ready for command...",
+            "running": "Processing...",
+            "success": "Operation successful.",
+            "error": "Operation failed."
+        }
+    }
+}
