@@ -18,9 +18,8 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
         }
     }, [user, isAdmin, isLoading, router]);
 
-    // TEMPORARY BYPASS FOR VERIFICATION
-    // if (isLoading || !user || !isAdmin) {
-    if (false) {
+    if (isLoading || !user || !isAdmin) {
+        // if (false) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-center">
