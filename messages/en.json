@@ -175,7 +175,10 @@
         "averageGross": "Average Gross",
         "averageNet": "Average Net",
         "totalPlayers": "Total Players",
-        "points": "Points"
+        "points": "Points",
+        "hole": "Hole",
+        "par": "Par",
+        "score": "Score"
     },
     "registrations": {
         "title": "Registrations Management",

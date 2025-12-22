@@ -175,7 +175,10 @@
         "averageGross": "ค่าเฉลี่ย Gross",
         "averageNet": "ค่าเฉลี่ย Net",
         "totalPlayers": "ผู้เล่นทั้งหมด",
-        "points": "คะแนน"
+        "points": "คะแนน",
+        "hole": "หลุมที่",
+        "par": "พาร์",
+        "score": "คะแนน"
     },
     "registrations": {
         "title": "จัดการการลงทะเบียน",

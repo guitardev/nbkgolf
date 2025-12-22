@@ -19,7 +19,7 @@ export default function LeaderboardPage() {
     const [sortBy, setSortBy] = useState<'gross' | 'net' | 'points'>('gross');
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [scoringSystem, setScoringSystem] = useState<ScoringSystem>('stroke');
-    const [expandedPlayerId, setExpandedPlayerId] = useState<string | null>(null);
+    const [expandedPlayerIds, setExpandedPlayerIds] = useState<Set<string>>(new Set());
     const locale = useTranslations('nav')('myTournaments') === 'รายการแข่งของฉัน' ? 'th' : 'en'; // Hack to detect locale if useLocale is not available, or just use next-intl hook
 
     useEffect(() => {
@@ -232,90 +232,103 @@ export default function LeaderboardPage() {
                                             <td colSpan={6} className="px-6 py-8 text-center text-gray-400">{t('noScores')}</td>
                                         </tr>
                                     ) : (
-                                        sortedLeaderboard.map((entry, index) => (
-                                            <>
-                                                <tr
-                                                    key={entry.player.id}
-                                                    className={`hover:bg-gray-700/50 transition-colors cursor-pointer ${expandedPlayerId === entry.player.id ? 'bg-gray-700/50' : ''}`}
-                                                    onClick={() => setExpandedPlayerId(expandedPlayerId === entry.player.id ? null : entry.player.id)}
-                                                >
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400">
-                                                        {entry.rank || index + 1}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white flex items-center gap-2">
-                                                        <span className="transform transition-transform duration-200">
-                                                            {expandedPlayerId === entry.player.id ? '▼' : '▶'}
-                                                        </span>
-                                                        {entry.player.name}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">
-                                                        {entry.thru}
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-white text-center">
-                                                        {entry.grossScore > 0 ? entry.grossScore : '-'}
-                                                    </td>
-
-                                                    {scoringSystem === 'stableford' ? (
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400 text-center">
-                                                            {entry.points}
+                                        sortedLeaderboard.map((entry, index) => {
+                                            const isExpanded = expandedPlayerIds.has(entry.player.id);
+                                            return (
+                                                <>
+                                                    <tr
+                                                        key={entry.player.id}
+                                                        className={`hover:bg-gray-700/50 transition-colors cursor-pointer ${isExpanded ? 'bg-gray-700/50' : ''}`}
+                                                        onClick={() => {
+                                                            setExpandedPlayerIds(prev => {
+                                                                const newSet = new Set(prev);
+                                                                if (newSet.has(entry.player.id)) {
+                                                                    newSet.delete(entry.player.id);
+                                                                } else {
+                                                                    newSet.add(entry.player.id);
+                                                                }
+                                                                return newSet;
+                                                            });
+                                                        }}
+                                                    >
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400">
+                                                            {entry.rank || index + 1}
                                                         </td>
-                                                    ) : (
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400 text-center">
-                                                            {entry.netScore > 0 ? entry.netScore : '-'}
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white flex items-center gap-2">
+                                                            <span className="transform transition-transform duration-200">
+                                                                {isExpanded ? '▼' : '▶'}
+                                                            </span>
+                                                            {entry.player.name}
                                                         </td>
-                                                    )}
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 text-center">
+                                                            {entry.thru}
+                                                        </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-white text-center">
+                                                            {entry.grossScore > 0 ? entry.grossScore : '-'}
+                                                        </td>
 
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 text-center hidden md:table-cell">
-                                                        {entry.handicap}
-                                                    </td>
-                                                </tr>
-                                                {/* Expandable Scorecard Row */}
-                                                {expandedPlayerId === entry.player.id && (
-                                                    <tr key={`${entry.player.id}-expanded`}>
-                                                        <td colSpan={6} className="px-0 py-0 border-b border-gray-700 bg-gray-800/50">
-                                                            <div className="p-4 overflow-x-auto">
-                                                                <div className="min-w-max">
-                                                                    <div className="grid grid-cols-[100px_repeat(9,1fr)_repeat(9,1fr)] gap-y-2 text-center text-xs sm:text-sm">
-                                                                        {/* Header Row */}
-                                                                        <div className="text-left font-bold text-gray-400 pl-2">Hole</div>
-                                                                        {Array.from({ length: 18 }, (_, i) => i + 1).map(h => (
-                                                                            <div key={h} className="font-bold text-gray-400">{h}</div>
-                                                                        ))}
+                                                        {scoringSystem === 'stableford' ? (
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400 text-center">
+                                                                {entry.points}
+                                                            </td>
+                                                        ) : (
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-400 text-center">
+                                                                {entry.netScore > 0 ? entry.netScore : '-'}
+                                                            </td>
+                                                        )}
 
-                                                                        {/* Par Row */}
-                                                                        <div className="text-left font-medium text-gray-500 pl-2">Par</div>
-                                                                        {course?.pars.map((p, i) => (
-                                                                            <div key={i} className="text-gray-500">{p}</div>
-                                                                        )) || Array(18).fill('-').map((_, i) => <div key={i}>-</div>)}
-
-                                                                        {/* Score Row */}
-                                                                        <div className="text-left font-bold text-emerald-400 pl-2">Score</div>
-                                                                        {Array.from({ length: 18 }, (_, i) => i + 1).map(h => {
-                                                                            const score = entry.holeScores?.[h] || 0;
-                                                                            const par = course?.pars?.[h - 1] || 4;
-                                                                            let scoreClass = 'text-gray-400';
-
-                                                                            if (score > 0) {
-                                                                                if (score < par) scoreClass = 'text-emerald-400 font-bold'; // Birdie or better
-                                                                                else if (score === par) scoreClass = 'text-white'; // Par
-                                                                                else if (score === par + 1) scoreClass = 'text-orange-400'; // Bogey
-                                                                                else scoreClass = 'text-red-400'; // Double Bogey+
-                                                                            }
-
-                                                                            return (
-                                                                                <div key={h} className={scoreClass}>
-                                                                                    {score > 0 ? score : '-'}
-                                                                                </div>
-                                                                            );
-                                                                        })}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 text-center hidden md:table-cell">
+                                                            {entry.handicap}
                                                         </td>
                                                     </tr>
-                                                )}
-                                            </>
-                                        ))
+                                                    {/* Expandable Scorecard Row */}
+                                                    {isExpanded && (
+                                                        <tr key={`${entry.player.id}-expanded`}>
+                                                            <td colSpan={6} className="px-0 py-0 border-b border-gray-700 bg-gray-800/50">
+                                                                <div className="p-4 overflow-x-auto">
+                                                                    <div className="min-w-max">
+                                                                        <div className="grid grid-cols-[100px_repeat(9,1fr)_repeat(9,1fr)] gap-y-2 text-center text-xs sm:text-sm">
+                                                                            {/* Header Row */}
+                                                                            <div className="text-left font-bold text-gray-400 pl-2">{t('hole')}</div>
+                                                                            {Array.from({ length: 18 }, (_, i) => i + 1).map(h => (
+                                                                                <div key={h} className="font-bold text-gray-400">{h}</div>
+                                                                            ))}
+
+                                                                            {/* Par Row */}
+                                                                            <div className="text-left font-medium text-gray-500 pl-2">{t('par')}</div>
+                                                                            {course?.pars.map((p, i) => (
+                                                                                <div key={i} className="text-gray-500">{p}</div>
+                                                                            )) || Array(18).fill('-').map((_, i) => <div key={i}>-</div>)}
+
+                                                                            {/* Score Row */}
+                                                                            <div className="text-left font-bold text-emerald-400 pl-2">{t('score')}</div>
+                                                                            {Array.from({ length: 18 }, (_, i) => i + 1).map(h => {
+                                                                                const score = entry.holeScores?.[h] || 0;
+                                                                                const par = course?.pars?.[h - 1] || 4;
+                                                                                let scoreClass = 'text-gray-400';
+
+                                                                                if (score > 0) {
+                                                                                    if (score < par) scoreClass = 'text-emerald-400 font-bold'; // Birdie or better
+                                                                                    else if (score === par) scoreClass = 'text-white'; // Par
+                                                                                    else if (score === par + 1) scoreClass = 'text-orange-400'; // Bogey
+                                                                                    else scoreClass = 'text-red-400'; // Double Bogey+
+                                                                                }
+
+                                                                                return (
+                                                                                    <div key={h} className={scoreClass}>
+                                                                                        {score > 0 ? score : '-'}
+                                                                                    </div>
+                                                                                );
+                                                                            })}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </>
+                                            );
+                                        })
                                     )}
                                 </tbody>
                             </table>
