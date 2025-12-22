@@ -3,7 +3,9 @@ import { google } from 'googleapis';
 
 export async function GET() {
     try {
-        const rawKey = process.env.GOOGLE_PRIVATE_KEY || '';
+        let rawKey = process.env.GOOGLE_PRIVATE_KEY || '';
+        // Remove any wrapping quotes
+        rawKey = rawKey.replace(/^["']|["']$/g, '');
         const processedKey = rawKey.replace(/\\n/g, '\n');
 
         console.log('Key Debug:', {

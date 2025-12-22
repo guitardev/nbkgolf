@@ -50,7 +50,9 @@ export interface TournamentPlayer {
 }
 
 // Google Sheets Setup
-const privateKey = process.env.GOOGLE_PRIVATE_KEY || '';
+let privateKey = process.env.GOOGLE_PRIVATE_KEY || '';
+// Remove any wrapping quotes that might be in the environment variable
+privateKey = privateKey.replace(/^["']|["']$/g, '');
 // If the key contains actual newlines, use it as is.
 // Otherwise, replace literal \n with actual newlines.
 const formattedKey = privateKey.includes('\n') ? privateKey : privateKey.replace(/\\n/g, '\n');
