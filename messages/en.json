@@ -86,7 +86,8 @@
         "profileRequiredRedirect": "Please complete your profile to continue.",
         "registrations": {
             "title": "Tournament Registrations"
-        }
+        },
+        "enterScore": "Enter Your Score"
     },
     "players": {
         "title": "Players Management",

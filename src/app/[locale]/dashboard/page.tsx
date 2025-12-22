@@ -258,6 +258,16 @@ export default function Dashboard() {
                                         </span>
                                         <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1" />
                                     </Link>
+                                    <Link
+                                        href={`/${locale}/play`}
+                                        className="group w-full p-4 bg-gradient-to-r from-teal-50 to-white border border-teal-100 text-teal-700 rounded-xl hover:shadow-md transition-all flex items-center justify-between"
+                                    >
+                                        <span className="font-medium flex items-center gap-3">
+                                            <Flag className="w-5 h-5" />
+                                            Enter Score (Mobile)
+                                        </span>
+                                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -273,11 +283,22 @@ export default function Dashboard() {
                         <p className="text-gray-600 mb-8 text-lg">{t('participantMessage')}</p>
                         <Link
                             href={`/${locale}/register`}
-                            className="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                            className="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 mb-4"
                         >
                             {t('registerForTournament')}
                             <ArrowRight className="w-5 h-5" />
                         </Link>
+
+                        <div className="mt-4 pt-6 border-t border-gray-100">
+                            <p className="text-gray-500 mb-4 text-sm">Already playing?</p>
+                            <Link
+                                href={`/${locale}/play`}
+                                className="inline-flex items-center gap-2 bg-white text-emerald-600 border-2 border-emerald-600 px-8 py-3 rounded-xl font-bold hover:bg-emerald-50 transition-all"
+                            >
+                                <Flag className="w-5 h-5" />
+                                {t('enterScore')}
+                            </Link>
+                        </div>
                     </div>
                 )}
             </div>
