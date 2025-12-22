@@ -87,7 +87,8 @@
         "registrations": {
             "title": "ลงทะเบียนทัวร์นาเมนต์"
         },
-        "enterScore": "กรอกคะแนนของคุณ"
+        "enterScore": "กรอกคะแนนของคุณ",
+        "enterScoreMobile": "บันทึกคะแนน (มือถือ)"
     },
     "players": {
         "title": "จัดการผู้เล่น",

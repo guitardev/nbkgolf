@@ -264,7 +264,7 @@ export default function Dashboard() {
                                     >
                                         <span className="font-medium flex items-center gap-3">
                                             <Flag className="w-5 h-5" />
-                                            Enter Score (Mobile)
+                                            {t('enterScoreMobile')}
                                         </span>
                                         <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1" />
                                     </Link>
