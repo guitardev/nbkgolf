@@ -63,13 +63,6 @@ export default function Home() {
 
           <MiniLeaderboard />
 
-
-
-          {/* Features Grid */}
-          <FeaturesSection />
-
-          <NewsSection />
-
           {/* Login Button */}
           <div className="space-y-6 pt-8">
             <button
@@ -86,6 +79,15 @@ export default function Home() {
               Secure access via LINE Login
             </p>
           </div>
+
+
+
+          {/* Features Grid */}
+          <FeaturesSection />
+
+          <NewsSection />
+
+
         </div>
       </div>
     </main>

@@ -52,9 +52,7 @@ export async function GET() {
                 id: playerId,
                 name: player?.name || 'Unknown',
                 score: playerScores.get(playerId) || 0,
-                image: player?.lineUserId ? `https://profile.line-scdn.net/${player.lineUserId}` : null // We don't have the profile image URL stored directly, usually lineUserId isn't the image URL. 
-                // Wait, db schema doesn't have image URL. Line User ID is just ID.
-                // We might not have image. We'll use initials or generic avatar.
+                image: player?.profilePicture || null
             };
         });
 
