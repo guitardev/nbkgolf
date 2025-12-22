@@ -79,4 +79,68 @@
     -   ✅ ถ้าข้อมูลขึ้น: เยี่ยม! Google Sheets เชื่อมต่อสำเร็จ
     -   ❌ ถ้าไม่ขึ้น: เช็ค `GOOGLE_PRIVATE_KEY` หรือ `GOOGLE_SHEET_ID` ใน Vercel อีกรอบ
 
+---
+
+## 6. 🔧 Troubleshooting: LINE Login ไม่ทำงาน
+
+### สาเหตุที่พบบ่อยที่สุด
+
+> [!WARNING]
+> **ปัญหา: กด Login แล้วไม่มีอะไรเกิดขึ้น หรือ Error 500**
+
+#### ✅ Quick Fix Checklist
+
+ทำตามลำดับนี้:
+
+1. **ตรวจสอบ Environment Variables บน Vercel**
+   - ไปที่ `Settings → Environment Variables`
+   - เช็คว่ามีครบ 4 ตัวนี้:
+     - `NEXTAUTH_URL` = `https://nbkgolf.vercel.app` (ไม่มี `/` ท้าย)
+     - `NEXTAUTH_SECRET` 
+     - `AUTH_LINE_ID`
+     - `AUTH_LINE_SECRET`
+
+2. **หลังแก้ Environment Variables ต้อง Redeploy**
+   - ไปที่ Tab **Deployments**
+   - คลิก 3 จุด (⋮) ที่ deployment ล่าสุด
+   - เลือก **Redeploy**
+
+3. **ตรวจสอบ LINE Callback URL**
+   - เข้า [LINE Developers Console](https://developers.line.biz/console/)
+   - Provider → Channel → **LINE Login** tab
+   - **Callback URL** ต้องมี:
+     ```
+     https://nbkgolf.vercel.app/api/auth/callback/line
+     ```
+
+4. **ดู Vercel Runtime Logs**
+   - ไปที่ **Deployments** → Latest → **Functions** tab
+   - ลอง Login อีกครั้ง
+   - ดู error message ที่ `/api/auth/callback/line`
+
+### Error Messages ที่พบบ่อย
+
+| Error | สาเหตุ | วิธีแก้ |
+|-------|--------|---------|
+| **Invalid client secret** | `AUTH_LINE_SECRET` ผิด | ตรวจสอบ value บน Vercel + Redeploy |
+| **Redirect URI mismatch** | Callback URL ไม่ตรงกับ LINE Console | แก้ใน LINE Developers Console |
+| **NEXTAUTH_URL is undefined** | ไม่มี env var นี้ | เพิ่ม `NEXTAUTH_URL` บน Vercel |
+| **500 Internal Server Error** | Environment variables ไม่ครบ | เช็คทุกตัว + Redeploy |
+
+### ทดสอบว่าแก้ไขสำเร็จ
+
+```bash
+# 1. เปิดเว็บ
+https://nbkgolf.vercel.app/
+
+# 2. กดปุ่ม "เข้าสู่ระบบ / ลงทะเบียนด้วย LINE"
+
+# 3. ควรเกิด flow นี้:
+#    - เปิดหน้า LINE Login
+#    - ใส่ข้อมูล LINE
+#    - กลับมาหน้า Dashboard (สำเร็จ! ✅)
+```
+
+---
+
 ขอให้สนุกกับเว็บใหม่ครับ! 🎉
