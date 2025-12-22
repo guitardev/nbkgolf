@@ -104,9 +104,17 @@ export default function Header() {
                         })}
                     </div>
 
-                    {/* Right Side Actions */}
                     <div className="hidden md:flex items-center gap-4">
                         <LanguageSwitcher />
+                        {user && user.pictureUrl && (
+                            <Link href={`/${locale}/profile`} className="relative block group">
+                                <img
+                                    src={user.pictureUrl}
+                                    alt={user.displayName}
+                                    className="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-emerald-500 transition-all object-cover shadow-sm"
+                                />
+                            </Link>
+                        )}
                         {user && (
                             <button
                                 onClick={logout}
@@ -121,6 +129,15 @@ export default function Header() {
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-4">
                         <LanguageSwitcher />
+                        {user && user.pictureUrl && (
+                            <Link href={`/${locale}/profile`} className="relative block">
+                                <img
+                                    src={user.pictureUrl}
+                                    alt={user.displayName}
+                                    className="w-8 h-8 rounded-full border border-gray-200 object-cover"
+                                />
+                            </Link>
+                        )}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
