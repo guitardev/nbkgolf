@@ -28,6 +28,14 @@ const extendedAuthOptions = {
                         profilePicture: user.image || '',
                         // Phone is intentionally left empty to force profile completion
                     });
+                } else {
+                    // Auto-heal: Update profile picture if missing and available from provider
+                    if (!existingPlayer.profilePicture && user.image) {
+                        console.log(`Updating profile picture for existing user: ${existingPlayer.name}`);
+                        await db.players.update(existingPlayer.id, {
+                            profilePicture: user.image
+                        });
+                    }
                 }
                 return true;
             } catch (error) {
