@@ -407,10 +407,35 @@ export default function LeaderboardPage() {
                                                                     {/* Statistics Section */}
                                                                     <div className="mt-6 pt-4 border-t border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                         <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs">
-                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-emerald-400"></span> {t('stats.birdie')}</div>
-                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-white border border-gray-400"></span> {t('stats.par')}</div>
-                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-orange-400"></span> {t('stats.bogey')}</div>
-                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-400"></span> {t('stats.double')}</div>
+                                                                            {(() => {
+                                                                                let eagles = 0;
+                                                                                let birdies = 0;
+                                                                                let pars = 0;
+                                                                                let bogeys = 0;
+                                                                                let doubles = 0;
+
+                                                                                Array.from({ length: 18 }, (_, i) => i + 1).forEach(h => {
+                                                                                    const s = entry.holeScores?.[h] || 0;
+                                                                                    const p = course?.pars?.[h - 1] || 4;
+                                                                                    if (s > 0) {
+                                                                                        if (s <= p - 2) eagles++;
+                                                                                        else if (s === p - 1) birdies++;
+                                                                                        else if (s === p) pars++;
+                                                                                        else if (s === p + 1) bogeys++;
+                                                                                        else doubles++;
+                                                                                    }
+                                                                                });
+
+                                                                                return (
+                                                                                    <>
+                                                                                        {eagles > 0 && <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-yellow-400"></span> <b>{eagles}</b> {t('stats.eagle')}</div>}
+                                                                                        <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-emerald-400"></span> <b>{birdies}</b> {t('stats.birdie')}</div>
+                                                                                        <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-white border border-gray-400"></span> <b>{pars}</b> {t('stats.par')}</div>
+                                                                                        <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-orange-400"></span> <b>{bogeys}</b> {t('stats.bogey')}</div>
+                                                                                        <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-400"></span> <b>{doubles}</b> {t('stats.double')}</div>
+                                                                                    </>
+                                                                                );
+                                                                            })()}
                                                                         </div>
 
                                                                         <div className="flex justify-center md:justify-end gap-6 text-sm">
