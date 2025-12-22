@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { Menu, X, LayoutDashboard, Users, Flag, Trophy, LogOut, TrendingUp, Settings } from "lucide-react";
+import { Menu, X, LayoutDashboard, Users, User, Flag, Trophy, LogOut, TrendingUp, Settings } from "lucide-react";
 
 export default function Header() {
     const pathname = usePathname();
@@ -106,13 +106,19 @@ export default function Header() {
 
                     <div className="hidden md:flex items-center gap-4">
                         <LanguageSwitcher />
-                        {user && user.pictureUrl && (
+                        {user && (
                             <Link href={`/${locale}/profile`} className="relative block group">
-                                <img
-                                    src={user.pictureUrl}
-                                    alt={user.displayName}
-                                    className="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-emerald-500 transition-all object-cover shadow-sm"
-                                />
+                                {user.pictureUrl ? (
+                                    <img
+                                        src={user.pictureUrl}
+                                        alt={user.displayName}
+                                        className="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-emerald-500 transition-all object-cover shadow-sm"
+                                    />
+                                ) : (
+                                    <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center border-2 border-transparent group-hover:border-emerald-500 transition-all shadow-sm">
+                                        <User className="w-5 h-5 text-emerald-600" />
+                                    </div>
+                                )}
                             </Link>
                         )}
                         {user && (
@@ -129,13 +135,19 @@ export default function Header() {
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-4">
                         <LanguageSwitcher />
-                        {user && user.pictureUrl && (
+                        {user && (
                             <Link href={`/${locale}/profile`} className="relative block">
-                                <img
-                                    src={user.pictureUrl}
-                                    alt={user.displayName}
-                                    className="w-8 h-8 rounded-full border border-gray-200 object-cover"
-                                />
+                                {user.pictureUrl ? (
+                                    <img
+                                        src={user.pictureUrl}
+                                        alt={user.displayName}
+                                        className="w-8 h-8 rounded-full border border-gray-200 object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-gray-200">
+                                        <User className="w-5 h-5 text-emerald-600" />
+                                    </div>
+                                )}
                             </Link>
                         )}
                         <button
