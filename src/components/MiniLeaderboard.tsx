@@ -68,7 +68,7 @@ export default function MiniLeaderboard() {
                             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 p-[2px] shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
                                 <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
                                     {player.image ? (
-                                        <img src={player.image} alt={player.name} className="w-full h-full object-cover" />
+                                        <img src={player.image} alt={player.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                                     ) : (
                                         <User className="w-8 h-8 text-gray-400" />
                                     )}

@@ -157,6 +157,7 @@ export default function ProfilePage() {
                                                 <img
                                                     src={formData.profilePicture}
                                                     alt="Profile"
+                                                    referrerPolicy="no-referrer"
                                                     className="w-full h-full object-cover"
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name || 'User')}&background=random`;

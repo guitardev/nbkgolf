@@ -112,6 +112,7 @@ export default function Header() {
                                     <img
                                         src={user.pictureUrl}
                                         alt={user.displayName}
+                                        referrerPolicy="no-referrer"
                                         className="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-emerald-500 transition-all object-cover shadow-sm"
                                     />
                                 ) : (
@@ -141,6 +142,7 @@ export default function Header() {
                                     <img
                                         src={user.pictureUrl}
                                         alt={user.displayName}
+                                        referrerPolicy="no-referrer"
                                         className="w-8 h-8 rounded-full border border-gray-200 object-cover"
                                     />
                                 ) : (
