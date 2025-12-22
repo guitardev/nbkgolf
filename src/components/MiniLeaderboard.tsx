@@ -57,7 +57,7 @@ export default function MiniLeaderboard() {
                 <h3 className="text-xl font-bold text-gray-900">{t('currentStandings')}</h3>
             </div>
 
-            <div className="flex justify-start md:justify-center overflow-x-auto pb-8 px-4 gap-6 no-scrollbar snap-x">
+            <div className="flex justify-start md:justify-center overflow-x-auto pt-4 pb-8 px-4 gap-6 no-scrollbar snap-x">
                 {/* Ranking Players */}
                 {players.map((player, index) => (
                     <div
