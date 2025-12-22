@@ -133,6 +133,7 @@ export interface LeaderboardEntry {
     points: number; // For Stableford
     rank: number;
     thru: number;
+    holeScores: { [hole: number]: number }; // Map hole number (1-18) to strokes
 }
 
 /**
@@ -157,6 +158,14 @@ export function generateLeaderboard(
         let netScore = grossScore;
         let handicap = player.handicap || 0;
         let points = 0;
+
+        // Populate hole scores
+        const holeScores: { [hole: number]: number } = {};
+        playerScores.forEach(s => {
+            if (s.hole > 0 && s.hole <= 18) {
+                holeScores[s.hole] = s.strokes;
+            }
+        });
 
         switch (scoringSystem) {
             case 'stroke':
@@ -192,7 +201,8 @@ export function generateLeaderboard(
             handicap,
             points,
             rank: 0,
-            thru: playerScores.filter(s => s.hole > 0 && s.hole <= 18).length
+            thru: playerScores.filter(s => s.hole > 0 && s.hole <= 18).length,
+            holeScores
         });
     }
 
