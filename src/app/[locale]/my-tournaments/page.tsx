@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Header from '@/components/Header';
-import { Calendar, Users, Trophy, Edit2, X, Check } from 'lucide-react';
+import { Calendar, Users, Trophy, Edit2, X, Check, Flag } from 'lucide-react';
 
 interface TournamentPlayer {
     id: string;
@@ -217,6 +218,16 @@ export default function MyTournamentsPage() {
                                             </div>
 
                                             <div className="flex items-center gap-2">
+                                                {/* Only show Enter Score if tournament is active */}
+                                                {tournament?.status === 'active' && (
+                                                    <Link
+                                                        href={`/${locale}/play`}
+                                                        className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                                                        title={t('enterScore')}
+                                                    >
+                                                        <Flag className="h-5 w-5" />
+                                                    </Link>
+                                                )}
                                                 {isEditing ? (
                                                     <>
                                                         <button

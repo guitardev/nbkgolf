@@ -267,7 +267,8 @@
         "withdrawSuccess": "Successfully withdrawn from tournament",
         "withdrawFailed": "Failed to withdraw",
         "profileRequired": "Profile Required",
-        "profileRequiredDesc": "You need to complete your profile before managing your tournament registrations."
+        "profileRequiredDesc": "You need to complete your profile before managing your tournament registrations.",
+        "enterScore": "Enter Score"
     },
     "checkStatus": {
         "title": "Check Registration Status",
