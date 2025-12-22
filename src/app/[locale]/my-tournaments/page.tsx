@@ -217,50 +217,55 @@ export default function MyTournamentsPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-4 sm:mt-0">
                                                 {/* Only show Enter Score if tournament is active */}
-                                                {tournament?.status === 'active' && (
+                                                {(tournament?.status === 'active' || tournament?.status === 'upcoming') && (
                                                     <Link
                                                         href={`/${locale}/play`}
-                                                        className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                                                        className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-sm"
                                                         title={t('enterScore')}
                                                     >
-                                                        <Flag className="h-5 w-5" />
+                                                        <Flag className="h-4 w-4" />
+                                                        <span className="text-sm font-medium">{t('enterScore')}</span>
                                                     </Link>
                                                 )}
                                                 {isEditing ? (
                                                     <>
                                                         <button
                                                             onClick={() => handleSaveTeam(registration.id)}
-                                                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                                            className="flex items-center justify-center gap-2 px-4 py-2 bg-green-100 text-green-700 hover:bg-green-200 rounded-lg transition-colors"
                                                             title={tCommon('save')}
                                                         >
-                                                            <Check className="h-5 w-5" />
+                                                            <Check className="h-4 w-4" />
+                                                            <span className="text-sm font-medium">{tCommon('save')}</span>
                                                         </button>
                                                         <button
                                                             onClick={() => setEditingId(null)}
-                                                            className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                                                            className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
                                                             title={tCommon('cancel')}
                                                         >
-                                                            <X className="h-5 w-5" />
+                                                            <X className="h-4 w-4" />
+                                                            <span className="text-sm font-medium">{tCommon('cancel')}</span>
                                                         </button>
                                                     </>
                                                 ) : (
                                                     <>
                                                         <button
                                                             onClick={() => handleEditTeam(registration)}
-                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                            className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors border border-blue-200"
                                                             title={t('changeTeam')}
                                                         >
-                                                            <Edit2 className="h-5 w-5" />
+                                                            <Edit2 className="h-4 w-4" />
+                                                            <span className="text-sm font-medium">{t('changeTeam')}</span>
                                                         </button>
                                                         {registration.status !== 'withdrawn' && (
                                                             <button
                                                                 onClick={() => handleWithdraw(registration.id)}
-                                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                                className="flex items-center justify-center gap-2 px-4 py-2 bg-red-50 text-red-700 hover:bg-red-100 rounded-lg transition-colors border border-red-200"
                                                                 title={t('withdraw')}
                                                             >
-                                                                <X className="h-5 w-5" />
+                                                                <X className="h-4 w-4" />
+                                                                <span className="text-sm font-medium">{t('withdraw')}</span>
                                                             </button>
                                                         )}
                                                     </>
