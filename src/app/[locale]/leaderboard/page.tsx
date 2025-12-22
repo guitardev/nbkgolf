@@ -413,6 +413,8 @@ export default function LeaderboardPage() {
                                                                                 let pars = 0;
                                                                                 let bogeys = 0;
                                                                                 let doubles = 0;
+                                                                                let triples = 0;
+                                                                                let others = 0;
 
                                                                                 Array.from({ length: 18 }, (_, i) => i + 1).forEach(h => {
                                                                                     const s = entry.holeScores?.[h] || 0;
@@ -422,7 +424,9 @@ export default function LeaderboardPage() {
                                                                                         else if (s === p - 1) birdies++;
                                                                                         else if (s === p) pars++;
                                                                                         else if (s === p + 1) bogeys++;
-                                                                                        else doubles++;
+                                                                                        else if (s === p + 2) doubles++;
+                                                                                        else if (s === p + 3) triples++;
+                                                                                        else others++;
                                                                                     }
                                                                                 });
 
@@ -433,6 +437,8 @@ export default function LeaderboardPage() {
                                                                                         <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-white border border-gray-400"></span> <b>{pars}</b> {t('stats.par')}</div>
                                                                                         <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-orange-400"></span> <b>{bogeys}</b> {t('stats.bogey')}</div>
                                                                                         <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-400"></span> <b>{doubles}</b> {t('stats.double')}</div>
+                                                                                        <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-600"></span> <b>{triples}</b> {t('stats.triple')}</div>
+                                                                                        {others > 0 && <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-purple-500"></span> <b>{others}</b> {t('stats.other')}</div>}
                                                                                     </>
                                                                                 );
                                                                             })()}

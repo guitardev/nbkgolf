@@ -194,7 +194,9 @@
             "birdie": "Birdie",
             "par": "Par",
             "bogey": "Bogey",
-            "double": "Double+"
+            "double": "Double Bogey",
+            "triple": "Triple Bogey",
+            "other": "Other"
         }
     },
     "registrations": {
