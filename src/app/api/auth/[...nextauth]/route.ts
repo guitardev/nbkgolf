@@ -25,6 +25,7 @@ const extendedAuthOptions = {
                         lineUserId: user.id,
                         handicap: 0,
                         team: '',
+                        profilePicture: user.image || '',
                         // Phone is intentionally left empty to force profile completion
                     });
                 }

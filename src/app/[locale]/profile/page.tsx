@@ -22,7 +22,8 @@ export default function ProfilePage() {
         email: '',
         phone: '',
         handicap: 0,
-        team: ''
+        team: '',
+        profilePicture: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
@@ -39,17 +40,29 @@ export default function ProfilePage() {
                 email: memberProfile.email || '',
                 phone: memberProfile.phone || '',
                 handicap: memberProfile.handicap || 0,
-                team: memberProfile.team || ''
+                team: memberProfile.team || '',
+                profilePicture: memberProfile.profilePicture || user?.pictureUrl || ''
             });
         } else if (user) {
             // Pre-fill name from Line profile if no member profile exists
-            setFormData(prev => ({ ...prev, name: user.displayName }));
+            setFormData(prev => ({
+                ...prev,
+                name: user.displayName,
+                profilePicture: user.pictureUrl || ''
+            }));
         }
     }, [user, memberProfile, authLoading, locale, router]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSyncLineImage = () => {
+        if (user?.pictureUrl) {
+            setFormData(prev => ({ ...prev, profilePicture: user.pictureUrl || '' }));
+            toast.success('Synced with LINE Profile');
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -136,6 +149,49 @@ export default function ProfilePage() {
                             )}
 
                             <form onSubmit={handleSubmit} className="space-y-6">
+                                {/* Profile Picture Section */}
+                                <div className="flex flex-col items-center mb-6">
+                                    <div className="relative group">
+                                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-emerald-100 shadow-md mb-3 bg-gray-100">
+                                            {formData.profilePicture ? (
+                                                <img
+                                                    src={formData.profilePicture}
+                                                    alt="Profile"
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name || 'User')}&background=random`;
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                                    <User className="h-10 w-10" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={handleSyncLineImage}
+                                            className="text-xs bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full hover:bg-emerald-100 transition-colors"
+                                            title="Use LINE Profile Picture"
+                                        >
+                                            Reset from LINE
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const url = prompt('Enter Image URL:', formData.profilePicture);
+                                                if (url !== null) setFormData(prev => ({ ...prev, profilePicture: url }));
+                                            }}
+                                            className="text-xs bg-gray-50 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-100 transition-colors"
+                                        >
+                                            Edit URL
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div className="space-y-4">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t('fields.name')}</label>

@@ -9,6 +9,7 @@ export interface Player {
     team?: string;
     email?: string;
     phone?: string;
+    profilePicture?: string;
 }
 
 export interface Tournament {
@@ -151,7 +152,7 @@ async function findRowIndexById(range: string, id: string): Promise<number | nul
 export const db = {
     players: {
         getAll: async (): Promise<Player[]> => {
-            const rows = await getSheetData('Players!A2:G');
+            const rows = await getSheetData('Players!A2:H');
             return rows.map((row) => ({
                 id: row[0],
                 name: row[1],
@@ -160,10 +161,11 @@ export const db = {
                 team: row[4],
                 email: row[5],
                 phone: row[6],
+                profilePicture: row[7],
             }));
         },
         add: async (player: Player) => {
-            return await appendSheetData('Players!A:G', [
+            return await appendSheetData('Players!A:H', [
                 player.id,
                 player.name,
                 player.lineUserId || '',
@@ -171,10 +173,11 @@ export const db = {
                 player.team || '',
                 player.email || '',
                 player.phone ? `'${player.phone}` : '',
+                player.profilePicture || '',
             ]);
         },
         update: async (id: string, player: Partial<Player>) => {
-            const rowIndex = await findRowIndexById('Players!A2:G', id);
+            const rowIndex = await findRowIndexById('Players!A2:H', id);
             if (!rowIndex) return false;
 
             const existing = await db.players.getAll();
@@ -182,7 +185,7 @@ export const db = {
             if (!current) return false;
 
             const updated = { ...current, ...player };
-            return await updateSheetRow('Players!A:G', rowIndex, [
+            return await updateSheetRow('Players!A:H', rowIndex, [
                 updated.id,
                 updated.name,
                 updated.lineUserId || '',
@@ -190,12 +193,13 @@ export const db = {
                 updated.team || '',
                 updated.email || '',
                 updated.phone ? `'${updated.phone}` : '',
+                updated.profilePicture || '',
             ]);
         },
         delete: async (id: string) => {
-            const rowIndex = await findRowIndexById('Players!A2:G', id);
+            const rowIndex = await findRowIndexById('Players!A2:H', id);
             if (!rowIndex) return false;
-            return await deleteSheetRow('Players!A:G', rowIndex);
+            return await deleteSheetRow('Players!A:H', rowIndex);
         },
     },
     tournaments: {
