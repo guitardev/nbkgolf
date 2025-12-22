@@ -178,7 +178,24 @@
         "points": "คะแนน",
         "hole": "หลุมที่",
         "par": "พาร์",
-        "score": "คะแนน"
+        "score": "คะแนน",
+        "refresh": "อัปเดต",
+        "lastUpdated": "อัปเดตล่าสุด",
+        "filters": "ตัวกรอง",
+        "allTeams": "ทุกทีม",
+        "allFlights": "ทุก Flight",
+        "team": "ทีม",
+        "flight": "Flight",
+        "statistics": "สถิติ",
+        "front9": "Front 9",
+        "back9": "Back 9",
+        "stats": {
+            "eagle": "Eagle/Better",
+            "birdie": "Birdie",
+            "par": "Par",
+            "bogey": "Bogey",
+            "double": "Double+"
+        }
     },
     "registrations": {
         "title": "จัดการการลงทะเบียน",

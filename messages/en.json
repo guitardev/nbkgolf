@@ -178,7 +178,24 @@
         "points": "Points",
         "hole": "Hole",
         "par": "Par",
-        "score": "Score"
+        "score": "Score",
+        "refresh": "Refresh",
+        "lastUpdated": "Last Updated",
+        "filters": "Filters",
+        "allTeams": "All Teams",
+        "allFlights": "All Flights",
+        "team": "Team",
+        "flight": "Flight",
+        "statistics": "Statistics",
+        "front9": "Front 9",
+        "back9": "Back 9",
+        "stats": {
+            "eagle": "Eagle/Better",
+            "birdie": "Birdie",
+            "par": "Par",
+            "bogey": "Bogey",
+            "double": "Double+"
+        }
     },
     "registrations": {
         "title": "Registrations Management",

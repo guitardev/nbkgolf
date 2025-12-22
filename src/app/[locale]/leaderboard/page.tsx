@@ -20,7 +20,58 @@ export default function LeaderboardPage() {
     const [order, setOrder] = useState<'asc' | 'desc'>('asc');
     const [scoringSystem, setScoringSystem] = useState<ScoringSystem>('stroke');
     const [expandedPlayerIds, setExpandedPlayerIds] = useState<Set<string>>(new Set());
-    const locale = useTranslations('nav')('myTournaments') === 'รายการแข่งของฉัน' ? 'th' : 'en'; // Hack to detect locale if useLocale is not available, or just use next-intl hook
+    const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+    const [filterTeam, setFilterTeam] = useState<string>('all');
+    const [filterFlight, setFilterFlight] = useState<string>('all');
+    const locale = useTranslations('nav')('myTournaments') === 'รายการแข่งของฉัน' ? 'th' : 'en'; // Hack to detect locale
+
+    const fetchData = async (background = false) => {
+        if (!selectedTournamentId) return;
+        if (!background) setIsLoading(true);
+
+        try {
+            const [playersRes, scoresRes, coursesRes] = await Promise.all([
+                fetch('/api/players'),
+                fetch(`/api/scores?tournamentId=${selectedTournamentId}`),
+                fetch('/api/courses')
+            ]);
+
+            const playersData: Player[] = await playersRes.json();
+            const scoresData: Score[] = await scoresRes.json();
+            const coursesData: Course[] = await coursesRes.json();
+
+            const tournament = tournaments.find(t => t.id === selectedTournamentId);
+            let pars: number[] = Array(18).fill(4);
+            let currentSystem: ScoringSystem = 'stroke';
+
+            if (tournament) {
+                const currentCourse = coursesData.find(c => c.id === tournament.courseId);
+                setCourse(currentCourse || null);
+                if (currentCourse && currentCourse.pars) pars = currentCourse.pars;
+                currentSystem = tournament.scoringSystem || 'stroke';
+                setScoringSystem(currentSystem);
+
+                // Set default sort based on system
+                if (currentSystem === 'stableford') {
+                    setSortBy('points');
+                    setOrder('desc');
+                } else {
+                    setSortBy('net');
+                    setOrder('asc');
+                }
+            }
+
+            // Generate Leaderboard
+            const entries = generateLeaderboard(playersData, scoresData, pars, currentSystem);
+            setLeaderboard(entries);
+            setLastUpdated(new Date());
+
+        } catch (err) {
+            console.error(err);
+        } finally {
+            if (!background) setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         const fetchTournaments = async () => {
@@ -41,72 +92,62 @@ export default function LeaderboardPage() {
         fetchTournaments();
     }, []);
 
+    // Auto Refresh Effect
     useEffect(() => {
         if (!selectedTournamentId) return;
 
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const [playersRes, scoresRes, coursesRes] = await Promise.all([
-                    fetch('/api/players'),
-                    fetch(`/api/scores?tournamentId=${selectedTournamentId}`),
-                    fetch('/api/courses')
-                ]);
-
-                const playersData: Player[] = await playersRes.json();
-                const scoresData: Score[] = await scoresRes.json();
-                const coursesData: Course[] = await coursesRes.json();
-
-                const tournament = tournaments.find(t => t.id === selectedTournamentId);
-                let pars: number[] = Array(18).fill(4);
-                let currentSystem: ScoringSystem = 'stroke';
-
-                if (tournament) {
-                    const currentCourse = coursesData.find(c => c.id === tournament.courseId);
-                    setCourse(currentCourse || null);
-                    if (currentCourse && currentCourse.pars) pars = currentCourse.pars;
-                    currentSystem = tournament.scoringSystem || 'stroke';
-                    setScoringSystem(currentSystem);
-
-                    // Set default sort based on system
-                    if (currentSystem === 'stableford') {
-                        setSortBy('points');
-                        setOrder('desc');
-                    } else {
-                        setSortBy('net');
-                        setOrder('asc');
-                    }
-                }
-
-                // Generate Leaderboard
-                const entries = generateLeaderboard(playersData, scoresData, pars, currentSystem);
-                setLeaderboard(entries);
-
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
+        // Initial load
         fetchData();
-    }, [selectedTournamentId, tournaments]);
 
-    const sortedLeaderboard = [...leaderboard].sort((a, b) => {
-        if (sortBy === 'gross') {
-            return order === 'asc'
-                ? a.grossScore - b.grossScore
-                : b.grossScore - a.grossScore;
-        } else if (sortBy === 'points') {
-            return order === 'asc'
-                ? a.points - b.points
-                : b.points - a.points;
-        } else {
-            return order === 'asc'
-                ? a.netScore - b.netScore
-                : b.netScore - a.netScore;
+        // Interval
+        const interval = setInterval(() => {
+            fetchData(true);
+        }, 60000); // 60 seconds
+
+        return () => clearInterval(interval);
+    }, [selectedTournamentId]);
+
+
+    const sortedLeaderboard = useMemo(() => {
+        let filtered = [...leaderboard];
+
+        // Filter Team
+        if (filterTeam !== 'all') {
+            filtered = filtered.filter(e => (e.player.team || '') === filterTeam);
         }
-    });
+
+        // Filter Flight
+        if (filterFlight !== 'all') {
+            filtered = filtered.filter(e => {
+                const hcp = e.player.handicap || 0;
+                if (filterFlight === 'A') return hcp <= 12;
+                if (filterFlight === 'B') return hcp >= 13 && hcp <= 24;
+                if (filterFlight === 'C') return hcp >= 25;
+                return true;
+            });
+        }
+
+        return filtered.sort((a, b) => {
+            if (sortBy === 'gross') {
+                return order === 'asc'
+                    ? a.grossScore - b.grossScore
+                    : b.grossScore - a.grossScore;
+            } else if (sortBy === 'points') {
+                return order === 'asc'
+                    ? a.points - b.points
+                    : b.points - a.points;
+            } else {
+                return order === 'asc'
+                    ? a.netScore - b.netScore
+                    : b.netScore - a.netScore;
+            }
+        });
+    }, [leaderboard, sortBy, order, filterTeam, filterFlight]);
+
+    const uniqueTeams = useMemo(() => {
+        const teams = new Set(leaderboard.map(e => e.player.team).filter(Boolean));
+        return Array.from(teams).sort();
+    }, [leaderboard]);
 
     return (
         <>
@@ -121,6 +162,19 @@ export default function LeaderboardPage() {
                             <p className="mt-2 text-gray-400">
                                 {getScoringSystemName(scoringSystem, 'th')}
                             </p>
+                            <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                                <button
+                                    onClick={() => fetchData()}
+                                    className="flex items-center gap-1 hover:text-emerald-400 transition-colors"
+                                >
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    {t('refresh')}
+                                </button>
+                                <span>•</span>
+                                <span>{t('lastUpdated')}: {lastUpdated.toLocaleTimeString()}</span>
+                            </div>
                         </div>
                         {/* Summary Card */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
@@ -148,6 +202,33 @@ export default function LeaderboardPage() {
                             {tournaments.map(t => (
                                 <option key={t.id} value={t.id}>{t.name}</option>
                             ))}
+                        </select>
+                    </div>
+
+                    {/* Filters */}
+                    <div className="flex flex-wrap gap-4 mb-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-400 font-medium bg-gray-700 px-2 py-1 rounded">{t('filters')}</span>
+                        </div>
+                        <select
+                            value={filterTeam}
+                            onChange={(e) => setFilterTeam(e.target.value)}
+                            className="bg-gray-800 border-gray-700 text-sm text-white rounded-md focus:ring-emerald-500 focus:border-emerald-500 px-3 py-1.5"
+                        >
+                            <option value="all">{t('allTeams')}</option>
+                            {uniqueTeams.map(team => (
+                                <option key={team} value={team!}>{team}</option>
+                            ))}
+                        </select>
+                        <select
+                            value={filterFlight}
+                            onChange={(e) => setFilterFlight(e.target.value)}
+                            className="bg-gray-800 border-gray-700 text-sm text-white rounded-md focus:ring-emerald-500 focus:border-emerald-500 px-3 py-1.5"
+                        >
+                            <option value="all">{t('allFlights')}</option>
+                            <option value="A">Flight A (0-12)</option>
+                            <option value="B">Flight B (13-24)</option>
+                            <option value="C">Flight C (25+)</option>
                         </select>
                     </div>
 
@@ -320,6 +401,31 @@ export default function LeaderboardPage() {
                                                                                     </div>
                                                                                 );
                                                                             })}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {/* Statistics Section */}
+                                                                    <div className="mt-6 pt-4 border-t border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                                        <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs">
+                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-emerald-400"></span> {t('stats.birdie')}</div>
+                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-white border border-gray-400"></span> {t('stats.par')}</div>
+                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-orange-400"></span> {t('stats.bogey')}</div>
+                                                                            <div className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-400"></span> {t('stats.double')}</div>
+                                                                        </div>
+
+                                                                        <div className="flex justify-center md:justify-end gap-6 text-sm">
+                                                                            <div className="bg-gray-700/50 px-3 py-1 rounded">
+                                                                                <span className="text-gray-400 mr-2">{t('front9')}:</span>
+                                                                                <span className="font-bold text-white">
+                                                                                    {Array.from({ length: 9 }, (_, i) => entry.holeScores?.[i + 1] || 0).reduce((a, b) => a + b, 0)}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div className="bg-gray-700/50 px-3 py-1 rounded">
+                                                                                <span className="text-gray-400 mr-2">{t('back9')}:</span>
+                                                                                <span className="font-bold text-white">
+                                                                                    {Array.from({ length: 9 }, (_, i) => entry.holeScores?.[i + 10] || 0).reduce((a, b) => a + b, 0)}
+                                                                                </span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
