@@ -16,10 +16,14 @@ export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const isLoggedIn = !!token;
 
-    // Check if visiting dashboard
-    const isDashboard = nextUrl.pathname.includes("/dashboard");
+    // Check if visiting dashboard or protected user pages
+    const isProtected =
+        nextUrl.pathname.includes("/dashboard") ||
+        nextUrl.pathname.includes("/profile") ||
+        nextUrl.pathname.includes("/play") ||
+        nextUrl.pathname.includes("/my-tournaments");
 
-    if (isDashboard && !isLoggedIn) {
+    if (isProtected && !isLoggedIn) {
         // Redirect to home page (which has login button)
         return NextResponse.redirect(new URL("/", nextUrl));
     }
