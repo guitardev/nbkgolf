@@ -2,20 +2,103 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import ConfirmActionDialog, { ConfirmVariant } from './ConfirmActionDialog';
 
 type ToolType = 'sync' | 'headers' | 'validate' | 'reset' | 'migrate' | 'courses';
 
 export default function SystemTools() {
     const [loading, setLoading] = useState<ToolType | null>(null);
     const [logs, setLogs] = useState<string[]>([]);
+    const [confirmConfig, setConfirmConfig] = useState<{
+        isOpen: boolean;
+        tool: ToolType | null;
+        title: string;
+        message: string;
+        variant: ConfirmVariant;
+        confirmText: string;
+    }>({
+        isOpen: false,
+        tool: null,
+        title: '',
+        message: '',
+        variant: 'info',
+        confirmText: 'Confirm'
+    });
+
     const t = useTranslations('adminTools');
 
-    const runTool = async (tool: ToolType) => {
-        if (tool === 'reset') {
-            if (!confirm(t('reset.confirm'))) return;
-            const confirmation = prompt(t('reset.confirm2'));
-            if (confirmation !== 'DELETE') return;
+    const initiateTool = (tool: ToolType) => {
+        let config = {
+            title: '',
+            message: '',
+            variant: 'info' as ConfirmVariant,
+            confirmText: 'Start'
+        };
+
+        switch (tool) {
+            case 'reset':
+                config = {
+                    title: t('reset.title'),
+                    message: t('reset.confirm') + "\n\nWARNING: This action cannot be undone. All data will be permanently deleted.",
+                    variant: 'danger',
+                    confirmText: 'DELETE ALL DATA'
+                };
+                break;
+            case 'sync':
+                config = {
+                    title: t('sync.title'),
+                    message: "This will synchronize data from Google Sheets to the local cache. Existing cache will be overwritten.",
+                    variant: 'info',
+                    confirmText: 'Sync Data'
+                };
+                break;
+            case 'headers':
+                config = {
+                    title: t('headers.title'),
+                    message: "This will re-write headers in all Google Sheets. This might be useful if headers were accidentally deleted or modified.",
+                    variant: 'warning',
+                    confirmText: 'Fix Headers'
+                };
+                break;
+            case 'validate':
+                config = {
+                    title: t('validate.title'),
+                    message: "This will run a consistency check on all system data. No data will be modified.",
+                    variant: 'info',
+                    confirmText: 'Run Validation'
+                };
+                break;
+            case 'migrate':
+                config = {
+                    title: t('migrate.title'),
+                    message: "This will migrate old score data structure to the new format. Please ensure you have a backup before proceeding.",
+                    variant: 'warning',
+                    confirmText: 'Migrate Scores'
+                };
+                break;
+            case 'courses':
+                config = {
+                    title: t('courses.title'),
+                    message: "This will clean up course data and recalculate distances. It may affect saved scorecards.",
+                    variant: 'warning',
+                    confirmText: 'Fix Courses'
+                };
+                break;
         }
+
+        setConfirmConfig({
+            isOpen: true,
+            tool,
+            ...config
+        });
+    };
+
+    const runTool = async () => {
+        const tool = confirmConfig.tool;
+        if (!tool) return;
+
+        // Close dialog
+        setConfirmConfig(prev => ({ ...prev, isOpen: false }));
 
         setLoading(tool);
         setLogs([`${t('console.running')} (${tool})...`]);
@@ -25,7 +108,7 @@ export default function SystemTools() {
             const data = await res.json();
 
             if (data.success) {
-                setLogs(prev => [...prev, ...data.logs, `✅ ${t('console.success')}`]);
+                setLogs(prev => [...prev, ...(data.logs || []), `✅ ${t('console.success')}`]);
             } else {
                 setLogs(prev => [...prev, `❌ ${t('console.error')}: ${data.error}`]);
             }
@@ -38,6 +121,16 @@ export default function SystemTools() {
 
     return (
         <div className="space-y-6">
+            <ConfirmActionDialog
+                isOpen={confirmConfig.isOpen}
+                title={confirmConfig.title}
+                message={confirmConfig.message}
+                variant={confirmConfig.variant}
+                confirmText={confirmConfig.confirmText}
+                onConfirm={runTool}
+                onCancel={() => setConfirmConfig(prev => ({ ...prev, isOpen: false }))}
+            />
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {/* Sync Data */}
                 <div className="bg-white p-6 rounded-lg shadow border border-gray-200 flex flex-col justify-between">
@@ -46,7 +139,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('sync.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('sync')}
+                        onClick={() => initiateTool('sync')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
                     >
@@ -61,7 +154,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('headers.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('headers')}
+                        onClick={() => initiateTool('headers')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:opacity-50"
                     >
@@ -76,7 +169,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('validate.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('validate')}
+                        onClick={() => initiateTool('validate')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-emerald-600 text-white rounded hover:bg-emerald-700 disabled:opacity-50"
                     >
@@ -91,7 +184,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('reset.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('reset')}
+                        onClick={() => initiateTool('reset')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
                     >
@@ -106,7 +199,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('migrate.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('migrate')}
+                        onClick={() => initiateTool('migrate')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
                     >
@@ -121,7 +214,7 @@ export default function SystemTools() {
                         <p className="text-sm text-gray-500 mb-4">{t('courses.desc')}</p>
                     </div>
                     <button
-                        onClick={() => runTool('courses')}
+                        onClick={() => initiateTool('courses')}
                         disabled={!!loading}
                         className="w-full py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-700 disabled:opacity-50"
                     >
