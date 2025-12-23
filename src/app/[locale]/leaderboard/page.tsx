@@ -78,10 +78,21 @@ export default function LeaderboardPage() {
             try {
                 const res = await fetch('/api/tournaments');
                 const data: Tournament[] = await res.json();
-                setTournaments(data);
-                if (data.length > 0) {
-                    const active = data.find(t => t.status === 'active') || data[0];
-                    setSelectedTournamentId(active.id);
+
+                // Filter only active and completed tournaments
+                const visibleTournaments = data.filter(t => t.status === 'active' || t.status === 'completed');
+
+                // Sort: Active first, then by date (newest first)
+                visibleTournaments.sort((a, b) => {
+                    if (a.status === 'active' && b.status !== 'active') return -1;
+                    if (a.status !== 'active' && b.status === 'active') return 1;
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                });
+
+                setTournaments(visibleTournaments);
+                if (visibleTournaments.length > 0) {
+                    // Default to the first one (which will be active if exists, or latest completed)
+                    setSelectedTournamentId(visibleTournaments[0].id);
                 }
             } catch (err) {
                 console.error("Failed to fetch tournaments", err);
