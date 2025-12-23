@@ -48,49 +48,56 @@ export default function CourseForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
             <div>
-                <label className="block text-sm font-medium text-gray-700">Course Name</label>
+                <label className="block text-base font-semibold text-gray-900 mb-2">Course Name</label>
                 <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    placeholder="Enter course name"
                 />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {[0, 9].map((startHole) => (
-                    <div key={startHole} className="space-y-2">
-                        <h3 className="font-medium text-gray-900">Holes {startHole + 1}-{startHole + 9}</h3>
-                        <div className="grid grid-cols-3 gap-2 text-xs font-medium text-gray-500 text-center">
-                            <div>Hole</div>
-                            <div>Par</div>
-                            <div>Dist</div>
+                    <div key={startHole} className="space-y-4">
+                        <h3 className="font-bold text-lg text-gray-900 border-b pb-2">Holes {startHole + 1}-{startHole + 9}</h3>
+                        <div className="grid grid-cols-[auto_1fr_1fr] gap-3 items-center mb-2 px-2">
+                            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider text-center w-8">Hole</div>
+                            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Par</div>
+                            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Dist</div>
                         </div>
-                        {Array.from({ length: 9 }).map((_, i) => {
-                            const holeIndex = startHole + i;
-                            return (
-                                <div key={holeIndex} className="grid grid-cols-3 gap-2 items-center">
-                                    <div className="text-center font-medium text-gray-700">{holeIndex + 1}</div>
-                                    <input
-                                        type="number"
-                                        min="3"
-                                        max="6"
-                                        value={pars[holeIndex]}
-                                        onChange={(e) => handleParChange(holeIndex, e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-1 border text-center"
-                                    />
-                                    <input
-                                        type="number"
-                                        value={distances[holeIndex]}
-                                        onChange={(e) => handleDistanceChange(holeIndex, e.target.value)}
-                                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-1 border text-center"
-                                    />
-                                </div>
-                            );
-                        })}
+                        <div className="space-y-3">
+                            {Array.from({ length: 9 }).map((_, i) => {
+                                const holeIndex = startHole + i;
+                                return (
+                                    <div key={holeIndex} className="grid grid-cols-[auto_1fr_1fr] gap-3 items-center">
+                                        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold text-sm">
+                                            {holeIndex + 1}
+                                        </div>
+                                        <input
+                                            type="number"
+                                            min="3"
+                                            max="6"
+                                            value={pars[holeIndex]}
+                                            onChange={(e) => handleParChange(holeIndex, e.target.value)}
+                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center"
+                                            placeholder="4"
+                                        />
+                                        <input
+                                            type="number"
+                                            value={distances[holeIndex]}
+                                            onChange={(e) => handleDistanceChange(holeIndex, e.target.value)}
+                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center"
+                                            placeholder="350"
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 ))}
             </div>
@@ -98,7 +105,7 @@ export default function CourseForm() {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+                className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg text-base font-bold text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-all transform active:scale-[0.98]"
             >
                 {isSubmitting ? 'Adding Course...' : 'Add Course'}
             </button>

@@ -44,45 +44,53 @@ export default function TournamentForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
             <div>
-                <label className="block text-sm font-medium text-gray-700">Tournament Name</label>
+                <label className="block text-base font-semibold text-gray-900 mb-2">Tournament Name</label>
                 <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    placeholder="Enter tournament name"
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700">Date</label>
+                <label className="block text-base font-semibold text-gray-900 mb-2">Date</label>
                 <input
                     type="date"
                     required
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
                 />
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700">Course</label>
-                <select
-                    required
-                    value={courseId}
-                    onChange={(e) => setCourseId(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border"
-                >
-                    <option value="">Select a course</option>
-                    {courses.map((course) => (
-                        <option key={course.id} value={course.id}>{course.name}</option>
-                    ))}
-                </select>
+                <label className="block text-base font-semibold text-gray-900 mb-2">Course</label>
+                <div className="relative">
+                    <select
+                        required
+                        value={courseId}
+                        onChange={(e) => setCourseId(e.target.value)}
+                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border appearance-none transition-colors bg-white pr-10"
+                    >
+                        <option value="">Select a course</option>
+                        {courses.map((course) => (
+                            <option key={course.id} value={course.id}>{course.name}</option>
+                        ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
             </div>
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+                className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg text-base font-bold text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 transition-all transform active:scale-[0.98]"
             >
                 {isSubmitting ? 'Creating...' : 'Create Tournament'}
             </button>
