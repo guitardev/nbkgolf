@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import ConfirmActionDialog, { ConfirmVariant } from './ConfirmActionDialog';
 
-type ToolType = 'sync' | 'headers' | 'validate' | 'reset' | 'migrate' | 'courses';
+type ToolType = 'sync' | 'headers' | 'validate' | 'reset' | 'courses';
 
 export default function SystemTools() {
     const [loading, setLoading] = useState<ToolType | null>(null);
@@ -68,14 +68,7 @@ export default function SystemTools() {
                     confirmText: t('validate.confirmButton')
                 };
                 break;
-            case 'migrate':
-                config = {
-                    title: t('migrate.title'),
-                    message: t('migrate.confirmMessage'),
-                    variant: 'warning',
-                    confirmText: t('migrate.confirmButton')
-                };
-                break;
+
             case 'courses':
                 config = {
                     title: t('courses.title'),
@@ -192,20 +185,7 @@ export default function SystemTools() {
                     </button>
                 </div>
 
-                {/* Migrate Scores */}
-                <div className="bg-white p-6 rounded-lg shadow border border-purple-100 flex flex-col justify-between">
-                    <div>
-                        <h3 className="text-lg font-bold text-purple-900 mb-2">📦 {t('migrate.title')}</h3>
-                        <p className="text-sm text-gray-500 mb-4">{t('migrate.desc')}</p>
-                    </div>
-                    <button
-                        onClick={() => initiateTool('migrate')}
-                        disabled={!!loading}
-                        className="w-full py-2 px-4 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
-                    >
-                        {loading === 'migrate' ? t('console.running') : t('migrate.button')}
-                    </button>
-                </div>
+
 
                 {/* Fix Courses */}
                 <div className="bg-white p-6 rounded-lg shadow border border-orange-100 flex flex-col justify-between">

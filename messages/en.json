@@ -343,13 +343,6 @@
             "confirmMessage": "WARNING: This action cannot be undone. All data will be permanently deleted.",
             "confirmButton": "DELETE ALL DATA"
         },
-        "migrate": {
-            "title": "Migrate Scores",
-            "desc": "Convert legacy vertical score format to new horizontal format.",
-            "button": "Run Migration",
-            "confirmMessage": "This will migrate old score data structure to the new format. Please ensure you have a backup before proceeding.",
-            "confirmButton": "Migrate Scores"
-        },
         "courses": {
             "title": "Fix Course Distances",
             "desc": "Repair corrupted distance data by forcing text format.",
