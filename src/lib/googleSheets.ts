@@ -153,16 +153,18 @@ export const db = {
     players: {
         getAll: async (): Promise<Player[]> => {
             const rows = await getSheetData('Players!A2:H');
-            return rows.map((row) => ({
-                id: row[0],
-                name: row[1],
-                lineUserId: row[2],
-                handicap: Number(row[3]),
-                team: row[4],
-                email: row[5],
-                phone: row[6],
-                profilePicture: row[7],
-            }));
+            return rows
+                .filter((row) => row[0]) // Filter out empty rows
+                .map((row) => ({
+                    id: row[0],
+                    name: row[1],
+                    lineUserId: row[2],
+                    handicap: Number(row[3]),
+                    team: row[4],
+                    email: row[5],
+                    phone: row[6],
+                    profilePicture: row[7],
+                }));
         },
         add: async (player: Player) => {
             return await appendSheetData('Players!A:H', [
@@ -205,14 +207,16 @@ export const db = {
     tournaments: {
         getAll: async (): Promise<Tournament[]> => {
             const rows = await getSheetData('Tournaments!A2:F');
-            return rows.map((row) => ({
-                id: row[0],
-                name: row[1],
-                date: row[2],
-                courseId: row[3],
-                status: row[4] as Tournament['status'],
-                scoringSystem: (row[5] as Tournament['scoringSystem']) || 'stroke',
-            }));
+            return rows
+                .filter((row) => row[0]) // Filter out empty rows
+                .map((row) => ({
+                    id: row[0],
+                    name: row[1],
+                    date: row[2],
+                    courseId: row[3],
+                    status: row[4] as Tournament['status'],
+                    scoringSystem: (row[5] as Tournament['scoringSystem']) || 'stroke',
+                }));
         },
         add: async (tournament: Tournament) => {
             return await appendSheetData('Tournaments!A:F', [
@@ -272,7 +276,10 @@ export const db = {
 
                 Object.entries(newScores).forEach(([hole, strokes]) => {
                     const colIndex = 1 + Number(hole); // H1 is at index 2 (Col C)
-                    updatedValues[colIndex] = strokes.toString();
+                    // Safeguard: Ensure we don't overwrite TId (0) or PId (1)
+                    if (colIndex >= 2 && colIndex < 20) {
+                        updatedValues[colIndex] = strokes.toString();
+                    }
                 });
 
                 // Calculate total (optional, stored in col 21/U if needed, but let's stick to simple first)
@@ -286,7 +293,9 @@ export const db = {
 
                 Object.entries(newScores).forEach(([hole, strokes]) => {
                     const colIndex = 1 + Number(hole);
-                    newRow[colIndex] = strokes.toString();
+                    if (colIndex >= 2 && colIndex < 20) {
+                        newRow[colIndex] = strokes.toString();
+                    }
                 });
 
                 return await appendSheetData('Scores!A:T', newRow);
@@ -322,12 +331,14 @@ export const db = {
     courses: {
         getAll: async (): Promise<Course[]> => {
             const rows = await getSheetData('Courses!A2:D');
-            return rows.map((row) => ({
-                id: row[0],
-                name: row[1],
-                pars: row[2].split(',').map(Number),
-                distances: row[3] ? row[3].split(',').map(Number) : [],
-            }));
+            return rows
+                .filter((row) => row[0]) // Filter out empty rows
+                .map((row) => ({
+                    id: row[0],
+                    name: row[1],
+                    pars: row[2].split(',').map(Number),
+                    distances: row[3] ? row[3].split(',').map(Number) : [],
+                }));
         },
         add: async (course: Course) => {
             return await appendSheetData('Courses!A:D', [
@@ -363,17 +374,19 @@ export const db = {
     tournamentPlayers: {
         getAll: async (): Promise<TournamentPlayer[]> => {
             const rows = await getSheetData('TournamentPlayers!A2:I');
-            return rows.map((row) => ({
-                id: row[0],
-                tournamentId: row[1],
-                playerId: row[2] || undefined,
-                team: row[3] || '',
-                registeredAt: row[4],
-                status: row[5] as TournamentPlayer['status'],
-                guestName: row[6] || undefined,
-                guestEmail: row[7] || undefined,
-                guestPhone: row[8] || undefined,
-            }));
+            return rows
+                .filter((row) => row[0]) // Filter out empty rows
+                .map((row) => ({
+                    id: row[0],
+                    tournamentId: row[1],
+                    playerId: row[2] || undefined,
+                    team: row[3] || '',
+                    registeredAt: row[4],
+                    status: row[5] as TournamentPlayer['status'],
+                    guestName: row[6] || undefined,
+                    guestEmail: row[7] || undefined,
+                    guestPhone: row[8] || undefined,
+                }));
         },
         getByTournament: async (tournamentId: string): Promise<TournamentPlayer[]> => {
             const all = await db.tournamentPlayers.getAll();
@@ -398,13 +411,9 @@ export const db = {
 
             if (success && tournamentPlayer.playerId) {
                 // Auto-initialize score row
-                await db.scores.add({
-                    tournamentId: tournamentPlayer.tournamentId,
-                    playerId: tournamentPlayer.playerId,
-                    hole: 0,
-                    strokes: 0,
-                    par: 0
-                }).catch(err => console.error('Failed to auto-init score row:', err));
+                // Use upsert with empty scores to create the row without overwriting PlayerID (which is at index 1, same as hole 0 would map to)
+                await db.scores.upsert(tournamentPlayer.tournamentId, tournamentPlayer.playerId, {})
+                    .catch(err => console.error('Failed to auto-init score row:', err));
             }
             return success;
         },
