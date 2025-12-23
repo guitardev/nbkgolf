@@ -39,49 +39,49 @@ export default function SystemTools() {
             case 'reset':
                 config = {
                     title: t('reset.title'),
-                    message: t('reset.confirm') + "\n\nWARNING: This action cannot be undone. All data will be permanently deleted.",
+                    message: t('reset.confirmMessage'),
                     variant: 'danger',
-                    confirmText: 'DELETE ALL DATA'
+                    confirmText: t('reset.confirmButton')
                 };
                 break;
             case 'sync':
                 config = {
                     title: t('sync.title'),
-                    message: "This will synchronize data from Google Sheets to the local cache. Existing cache will be overwritten.",
+                    message: t('sync.confirmMessage'),
                     variant: 'info',
-                    confirmText: 'Sync Data'
+                    confirmText: t('sync.confirmButton')
                 };
                 break;
             case 'headers':
                 config = {
                     title: t('headers.title'),
-                    message: "This will re-write headers in all Google Sheets. This might be useful if headers were accidentally deleted or modified.",
+                    message: t('headers.confirmMessage'),
                     variant: 'warning',
-                    confirmText: 'Fix Headers'
+                    confirmText: t('headers.confirmButton')
                 };
                 break;
             case 'validate':
                 config = {
                     title: t('validate.title'),
-                    message: "This will run a consistency check on all system data. No data will be modified.",
+                    message: t('validate.confirmMessage'),
                     variant: 'info',
-                    confirmText: 'Run Validation'
+                    confirmText: t('validate.confirmButton')
                 };
                 break;
             case 'migrate':
                 config = {
                     title: t('migrate.title'),
-                    message: "This will migrate old score data structure to the new format. Please ensure you have a backup before proceeding.",
+                    message: t('migrate.confirmMessage'),
                     variant: 'warning',
-                    confirmText: 'Migrate Scores'
+                    confirmText: t('migrate.confirmButton')
                 };
                 break;
             case 'courses':
                 config = {
                     title: t('courses.title'),
-                    message: "This will clean up course data and recalculate distances. It may affect saved scorecards.",
+                    message: t('courses.confirmMessage'),
                     variant: 'warning',
-                    confirmText: 'Fix Courses'
+                    confirmText: t('courses.confirmButton')
                 };
                 break;
         }

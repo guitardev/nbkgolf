@@ -316,34 +316,46 @@
         "sync": {
             "title": "Sync Missing Data",
             "desc": "Automatically links Guest registrations to Member profiles based on Email/Phone. Also synchronizes Team names across registrations.",
-            "button": "Run Sync"
+            "button": "Run Sync",
+            "confirmMessage": "This will synchronize data from Google Sheets to the local cache. Existing cache will be overwritten.",
+            "confirmButton": "Sync Data"
         },
         "headers": {
             "title": "Fix Sheet Headers",
             "desc": "Repairs Google Sheet column headers to match the latest application schema. Use this if you see data in wrong columns.",
-            "button": "Fix Headers"
+            "button": "Fix Headers",
+            "confirmMessage": "This will re-write headers in all Google Sheets. This might be useful if headers were accidentally deleted or modified.",
+            "confirmButton": "Fix Headers"
         },
         "validate": {
             "title": "System Health Check",
             "desc": "Runs a safe End-to-End simulation (Create -> Register -> Score -> Delete) to verify that the API and Database are working correctly.",
-            "button": "Run Health Check"
+            "button": "Run Health Check",
+            "confirmMessage": "This will run a consistency check on all system data. No data will be modified.",
+            "confirmButton": "Run Validation"
         },
         "reset": {
             "title": "Reset Database",
             "desc": "⚠️ DANGER: Wipes ALL data from Players, Tournaments, and Scores. This action cannot be undone. Use only for fresh starts.",
             "button": "Reset All Data",
             "confirm": "Are you sure you want to WIPe ALL DATA?",
-            "confirm2": "Type DELETE to confirm"
+            "confirm2": "Type DELETE to confirm",
+            "confirmMessage": "WARNING: This action cannot be undone. All data will be permanently deleted.",
+            "confirmButton": "DELETE ALL DATA"
         },
         "migrate": {
             "title": "Migrate Scores",
             "desc": "Convert legacy vertical score format to new horizontal format.",
-            "button": "Run Migration"
+            "button": "Run Migration",
+            "confirmMessage": "This will migrate old score data structure to the new format. Please ensure you have a backup before proceeding.",
+            "confirmButton": "Migrate Scores"
         },
         "courses": {
             "title": "Fix Course Distances",
             "desc": "Repair corrupted distance data by forcing text format.",
-            "button": "Fix Courses"
+            "button": "Fix Courses",
+            "confirmMessage": "This will clean up course data and recalculate distances. It may affect saved scorecards.",
+            "confirmButton": "Fix Courses"
         },
         "console": {
             "title": "Operation Log",
