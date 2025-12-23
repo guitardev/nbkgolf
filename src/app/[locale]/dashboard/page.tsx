@@ -24,6 +24,7 @@ export default function Dashboard() {
     });
     const [recentRegistrations, setRecentRegistrations] = useState<TournamentPlayer[]>([]);
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
+    const [tournaments, setTournaments] = useState<Tournament[]>([]);
     const [dataLoading, setDataLoading] = useState(true);
 
     useEffect(() => {
@@ -58,6 +59,7 @@ export default function Dashboard() {
                     const registrations: TournamentPlayer[] = await registrationsRes.json();
 
                     setAllPlayers(players);
+                    setTournaments(tournaments);
                     setStats({
                         players: players.length,
                         courses: courses.length,
@@ -194,6 +196,10 @@ export default function Dashboard() {
                                                         <div>
                                                             <p className="font-semibold text-gray-900">{displayName}</p>
                                                             <p className="text-sm text-gray-500">{displayEmail}</p>
+                                                            <p className="text-xs text-emerald-600 flex items-center gap-1 mt-0.5">
+                                                                <Trophy className="w-3 h-3" />
+                                                                {tournaments.find(t => t.id === reg.tournamentId)?.name || 'Unknown Tournament'}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${reg.status === 'confirmed' || reg.status === 'registered'
