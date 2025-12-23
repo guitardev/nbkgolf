@@ -87,8 +87,12 @@ export function useAdminAPI() {
     }, [makeRequest]);
 
     // Registration operations (now using TournamentPlayers)
+    const createRegistration = useCallback((data: any) => {
+        return makeRequest('/api/tournament-players', 'POST', data);
+    }, [makeRequest]);
+
     const updateRegistration = useCallback((id: string, updates: any) => {
-        return makeRequest('/api/tournament-players', 'PATCH', { id, ...updates });
+        return makeRequest(`/api/tournament-players?id=${id}`, 'PATCH', { id, ...updates });
     }, [makeRequest]);
 
     const deleteRegistration = useCallback((id: string) => {
@@ -112,6 +116,7 @@ export function useAdminAPI() {
         createTournament,
         updateTournament,
         deleteTournament,
+        createRegistration,
         updateRegistration,
         deleteRegistration,
         addScore,
