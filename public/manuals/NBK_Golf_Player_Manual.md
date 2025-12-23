@@ -1,3 +1,10 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+body {
+    font-family: 'Sarabun', sans-serif;
+}
+</style>
+
 # คู่มือการใช้งาน NBK Golf Application (ฉบับสมบูรณ์)
 
 ยินดีต้อนรับสู่ **NBK Golf Application**! แอปพลิเคชันที่ช่วยอำนวยความสะดวกให้แก่นักกอล์ฟในการจัดการการแข่งขัน บันทึกคะแนนแบบ Real-time และติดตามผลการแข่งขันได้ทันที คู่มือนี้จะอธิบายขั้นตอนการใช้งานอย่างละเอียดเพื่อให้คุณได้รับประสบการณ์ที่ดีที่สุด
