@@ -72,16 +72,14 @@ export default function EditModal<T extends Record<string, any>>({
                                     <textarea
                                         value={formData[field.key] || ''}
                                         onChange={(e) => handleChange(field.key, e.target.value)}
-                                        required={field.required}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-gray-900"
                                         rows={3}
                                     />
                                 ) : field.type === 'select' ? (
                                     <select
                                         value={formData[field.key] || ''}
                                         onChange={(e) => handleChange(field.key, e.target.value)}
-                                        required={field.required}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-gray-900"
                                     >
                                         {field.options?.map((option) => (
                                             <option key={option.value} value={option.value}>
@@ -94,8 +92,7 @@ export default function EditModal<T extends Record<string, any>>({
                                         type={field.type || 'text'}
                                         value={formData[field.key] || ''}
                                         onChange={(e) => handleChange(field.key, field.type === 'number' ? Number(e.target.value) : e.target.value)}
-                                        required={field.required}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-gray-900"
                                     />
                                 )}
                             </div>

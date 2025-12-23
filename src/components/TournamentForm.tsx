@@ -52,7 +52,7 @@ export default function TournamentForm() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                     placeholder="Enter tournament name"
                 />
             </div>
@@ -63,7 +63,7 @@ export default function TournamentForm() {
                     required
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                 />
             </div>
             <div>
@@ -73,7 +73,7 @@ export default function TournamentForm() {
                         required
                         value={courseId}
                         onChange={(e) => setCourseId(e.target.value)}
-                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border appearance-none transition-colors bg-white pr-10"
+                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border appearance-none transition-colors bg-white pr-10 text-gray-900"
                     >
                         <option value="">Select a course</option>
                         {courses.map((course) => (

@@ -207,7 +207,7 @@ export default function ProfilePage() {
                                                 required
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white text-gray-900"
                                                 placeholder="John Doe"
                                             />
                                         </div>
@@ -225,7 +225,7 @@ export default function ProfilePage() {
                                                 id="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white text-gray-900"
                                                 placeholder="john@example.com"
                                             />
                                         </div>
@@ -244,7 +244,7 @@ export default function ProfilePage() {
                                                 required
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                                                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white text-gray-900"
                                                 placeholder="0812345678"
                                             />
                                         </div>
@@ -265,7 +265,7 @@ export default function ProfilePage() {
                                                     max="36"
                                                     value={formData.handicap}
                                                     onChange={handleChange}
-                                                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                                                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white text-gray-900"
                                                 />
                                             </div>
                                         </div>
@@ -282,7 +282,7 @@ export default function ProfilePage() {
                                                     id="team"
                                                     value={formData.team}
                                                     onChange={handleChange}
-                                                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                                                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white text-gray-900"
                                                     placeholder="Team A"
                                                 />
                                             </div>

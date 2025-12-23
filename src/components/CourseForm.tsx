@@ -56,7 +56,7 @@ export default function CourseForm() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                     placeholder="Enter course name"
                 />
             </div>
@@ -84,14 +84,14 @@ export default function CourseForm() {
                                             max="6"
                                             value={pars[holeIndex]}
                                             onChange={(e) => handleParChange(holeIndex, e.target.value)}
-                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center"
+                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center bg-white text-gray-900"
                                             placeholder="4"
                                         />
                                         <input
                                             type="number"
                                             value={distances[holeIndex]}
                                             onChange={(e) => handleDistanceChange(holeIndex, e.target.value)}
-                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center"
+                                            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-2 px-1 border text-center bg-white text-gray-900"
                                             placeholder="350"
                                         />
                                     </div>

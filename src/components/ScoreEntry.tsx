@@ -69,7 +69,7 @@ export default function ScoreEntry({ tournamentId, course }: ScoreEntryProps) {
                     <select
                         value={selectedPlayerId}
                         onChange={(e) => setSelectedPlayerId(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 border bg-white text-gray-900"
                     >
                         <option value="">Select Player</option>
                         {players.map(p => (
@@ -91,7 +91,7 @@ export default function ScoreEntry({ tournamentId, course }: ScoreEntryProps) {
                                         min="1"
                                         value={scores[hole] || ''}
                                         onChange={(e) => handleScoreChange(hole, e.target.value)}
-                                        className="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                        className="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm bg-white text-gray-900"
                                     />
                                 </div>
                             );

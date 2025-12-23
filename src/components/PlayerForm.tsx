@@ -44,7 +44,7 @@ export default function PlayerForm() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                     placeholder="Enter player name"
                 />
             </div>
@@ -55,7 +55,7 @@ export default function PlayerForm() {
                     required
                     value={formData.handicap}
                     onChange={(e) => setFormData({ ...formData, handicap: e.target.value })}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                     placeholder="Enter handicap"
                 />
             </div>
@@ -65,7 +65,7 @@ export default function PlayerForm() {
                     type="text"
                     value={formData.team}
                     onChange={(e) => setFormData({ ...formData, team: e.target.value })}
-                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors"
+                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 px-4 border transition-colors bg-white text-gray-900"
                     placeholder="Enter team name (optional)"
                 />
             </div>

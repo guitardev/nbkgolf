@@ -143,8 +143,7 @@ export default function RegistrationModal({
                                 <select
                                     required
                                     value={formData.tournamentId}
-                                    onChange={(e) => setFormData({ ...formData, tournamentId: e.target.value })}
-                                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3"
+                                    className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 bg-white text-gray-900"
                                     disabled={mode === 'edit'} // Don't change tournament on edit usually
                                 >
                                     <option value="">Select Tournament</option>
@@ -185,8 +184,7 @@ export default function RegistrationModal({
                                                     <Search className="h-5 w-5 text-gray-400" />
                                                 </div>
                                                 <input
-                                                    type="text"
-                                                    className="block w-full pl-10 rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3"
+                                                    className="block w-full pl-10 rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 bg-white text-gray-900"
                                                     placeholder="Search by name..."
                                                     value={searchTerm}
                                                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -204,8 +202,7 @@ export default function RegistrationModal({
                                                         team: player?.team || formData.team // Auto-fill team
                                                     });
                                                 }}
-                                                size={5}
-                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 text-sm"
+                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 text-sm bg-white text-gray-900"
                                             >
                                                 {filteredPlayers.length > 0 ? (
                                                     filteredPlayers.map(p => (
@@ -232,9 +229,7 @@ export default function RegistrationModal({
                                         <input
                                             type="text"
                                             required
-                                            value={formData.guestName}
-                                            onChange={(e) => setFormData({ ...formData, guestName: e.target.value })}
-                                            className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4"
+                                            className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4 bg-white text-gray-900"
                                             placeholder="Enter guest name"
                                         />
                                     </div>
@@ -243,9 +238,7 @@ export default function RegistrationModal({
                                             <label className="block text-sm font-semibold text-gray-700 mb-1">Phone</label>
                                             <input
                                                 type="tel"
-                                                value={formData.guestPhone}
-                                                onChange={(e) => setFormData({ ...formData, guestPhone: e.target.value })}
-                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4"
+                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4 bg-white text-gray-900"
                                                 placeholder="0812345678"
                                             />
                                         </div>
@@ -253,9 +246,7 @@ export default function RegistrationModal({
                                             <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
                                             <input
                                                 type="email"
-                                                value={formData.guestEmail}
-                                                onChange={(e) => setFormData({ ...formData, guestEmail: e.target.value })}
-                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4"
+                                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4 bg-white text-gray-900"
                                                 placeholder="guest@example.com"
                                             />
                                         </div>
@@ -269,18 +260,14 @@ export default function RegistrationModal({
                                     <label className="block text-sm font-semibold text-gray-700 mb-1">Team</label>
                                     <input
                                         type="text"
-                                        value={formData.team}
-                                        onChange={(e) => setFormData({ ...formData, team: e.target.value })}
-                                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4"
+                                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4 bg-white text-gray-900"
                                         placeholder="Optional"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-1">Status</label>
                                     <select
-                                        value={formData.status}
-                                        onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4"
+                                        className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 px-4 bg-white text-gray-900"
                                     >
                                         <option value="pending">Pending</option>
                                         <option value="confirmed">Confirmed</option>
