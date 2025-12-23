@@ -187,7 +187,7 @@ export default function TournamentManagePage({ params }: PageProps) {
                             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                                 <div className="relative w-full sm:w-64">
                                     <select
-                                        className="w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 pl-4 pr-10 appearance-none bg-white"
+                                        className="w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-base py-3 pl-4 pr-10 appearance-none bg-white text-gray-900"
                                         value={selectedPlayerId}
                                         onChange={(e) => setSelectedPlayerId(e.target.value)}
                                     >
@@ -259,7 +259,7 @@ export default function TournamentManagePage({ params }: PageProps) {
                                                         pattern="[0-9]*"
                                                         min="1"
                                                         max="20"
-                                                        className="w-12 h-12 sm:w-10 sm:h-10 text-center border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-lg font-medium p-0 shadow-sm transition-all bg-gray-50 focus:bg-white"
+                                                        className="w-12 h-12 sm:w-10 sm:h-10 text-center border-gray-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-lg font-medium p-0 shadow-sm transition-all bg-white text-gray-900"
                                                         value={getScore(player.id, hole)}
                                                         onChange={(e) => handleScoreChange(player.id, hole, e.target.value)}
                                                     />

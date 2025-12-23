@@ -124,7 +124,7 @@ export default function SystemTools() {
                 onCancel={() => setConfirmConfig(prev => ({ ...prev, isOpen: false }))}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
                 {/* Sync Data */}
                 <div className="bg-white p-6 rounded-lg shadow border border-gray-200 flex flex-col justify-between">
                     <div>
@@ -134,7 +134,7 @@ export default function SystemTools() {
                     <button
                         onClick={() => initiateTool('sync')}
                         disabled={!!loading}
-                        className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-medium active:scale-[0.98] transition-all"
                     >
                         {loading === 'sync' ? t('console.running') : t('sync.button')}
                     </button>
@@ -149,7 +149,7 @@ export default function SystemTools() {
                     <button
                         onClick={() => initiateTool('headers')}
                         disabled={!!loading}
-                        className="w-full py-2 px-4 bg-yellow-600 text-white rounded hover:bg-yellow-700 disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 disabled:opacity-50 font-medium active:scale-[0.98] transition-all"
                     >
                         {loading === 'headers' ? t('console.running') : t('headers.button')}
                     </button>
@@ -164,7 +164,7 @@ export default function SystemTools() {
                     <button
                         onClick={() => initiateTool('validate')}
                         disabled={!!loading}
-                        className="w-full py-2 px-4 bg-emerald-600 text-white rounded hover:bg-emerald-700 disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 font-medium active:scale-[0.98] transition-all"
                     >
                         {loading === 'validate' ? t('console.running') : t('validate.button')}
                     </button>
@@ -179,7 +179,7 @@ export default function SystemTools() {
                     <button
                         onClick={() => initiateTool('reset')}
                         disabled={!!loading}
-                        className="w-full py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 font-medium active:scale-[0.98] transition-all"
                     >
                         {loading === 'reset' ? t('console.running') : t('reset.button')}
                     </button>
@@ -196,7 +196,7 @@ export default function SystemTools() {
                     <button
                         onClick={() => initiateTool('courses')}
                         disabled={!!loading}
-                        className="w-full py-2 px-4 bg-orange-600 text-white rounded hover:bg-orange-700 disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 font-medium active:scale-[0.98] transition-all"
                     >
                         {loading === 'courses' ? t('console.running') : t('courses.button')}
                     </button>

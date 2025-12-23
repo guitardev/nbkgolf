@@ -198,7 +198,7 @@ export default function RegistrationsPage() {
                             <select
                                 value={selectedTournament}
                                 onChange={(e) => setSelectedTournament(e.target.value)}
-                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 text-base"
+                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 text-base bg-white text-gray-900"
                             >
                                 <option value="all">{t('allTournaments')}</option>
                                 {tournaments.map(t => (
@@ -213,7 +213,7 @@ export default function RegistrationsPage() {
                             <select
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
-                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 text-base"
+                                className="block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 py-3 text-base bg-white text-gray-900"
                             >
                                 <option value="all">All Statuses</option>
                                 <option value="pending">Pending</option>
