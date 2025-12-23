@@ -52,8 +52,8 @@ export default function Header() {
         { href: `/${locale}/my-tournaments`, label: t('myTournaments'), icon: Trophy, adminOnly: false },
         { href: `/${locale}/profile`, label: t('profile'), icon: Users, adminOnly: false },
         { href: `/${locale}/dashboard/players`, label: t('players'), icon: Users, adminOnly: true },
-        { href: `/${locale}/dashboard/courses`, label: t('courses'), icon: Flag, adminOnly: true },
-        { href: `/${locale}/dashboard/tournaments`, label: t('tournaments'), icon: Trophy, adminOnly: true },
+        { href: `/${locale}/dashboard/courses`, label: t('courses'), icon: Flag, adminOnly: false },
+        { href: `/${locale}/dashboard/tournaments`, label: t('tournaments'), icon: Trophy, adminOnly: false },
         { href: `/${locale}/dashboard/admin`, label: t('adminSystem'), icon: Settings, adminOnly: true },
     ];
 

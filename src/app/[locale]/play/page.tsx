@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Header from '@/components/Header';
 import { Loader2, ChevronLeft, ChevronRight, Save, MapPin } from 'lucide-react';
 import { Course, Tournament } from '@/lib/googleSheets';
@@ -13,6 +14,7 @@ import toast from 'react-hot-toast';
 export default function MobileScoringPage() {
     const { user, memberProfile, isLoading: authLoading } = useAuth();
     const router = useRouter();
+    const t = useTranslations('play');
 
     const [loading, setLoading] = useState(true);
     const [activeTournament, setActiveTournament] = useState<Tournament | null>(null);
@@ -38,7 +40,7 @@ export default function MobileScoringPage() {
                 const active = tournaments.find(t => t.status === 'active' || t.status === 'upcoming'); // Allowing upcoming for testing
 
                 if (!active) {
-                    toast.error("No active tournament found");
+                    toast.error(t('toasts.noActiveFound'));
                     setLoading(false);
                     return;
                 }
@@ -67,7 +69,7 @@ export default function MobileScoringPage() {
 
             } catch (error) {
                 console.error("Failed to load scoring data", error);
-                toast.error("Failed to load tournament data");
+                toast.error(t('toasts.loadError'));
             } finally {
                 setLoading(false);
             }
@@ -107,7 +109,7 @@ export default function MobileScoringPage() {
             // toast.success('Saved', { duration: 1000 });
         } catch (error) {
             console.error('Save failed', error);
-            toast.error('Failed to save score. Please check connection.');
+            toast.error(t('toasts.saveError'));
         } finally {
             setSaving(false);
         }
@@ -139,13 +141,13 @@ export default function MobileScoringPage() {
             <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
                 <Header />
                 <div className="text-center mt-20">
-                    <h2 className="text-xl font-bold text-gray-900">No Active Tournament</h2>
-                    <p className="text-gray-500 mt-2">There is no tournament currently in progress.</p>
+                    <h2 className="text-xl font-bold text-gray-900">{t('noActiveTournament')}</h2>
+                    <p className="text-gray-500 mt-2">{t('noActiveTournamentDesc')}</p>
                     <button
                         onClick={() => router.push('/dashboard')}
                         className="mt-6 text-emerald-600 font-medium hover:underline"
                     >
-                        Return to Dashboard
+                        {t('returnToDashboard')}
                     </button>
                 </div>
             </div>
@@ -172,7 +174,7 @@ export default function MobileScoringPage() {
                         onClick={() => setViewMode(viewMode === 'hole' ? 'card' : 'hole')}
                         className="text-emerald-600 text-sm font-medium bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 hover:bg-emerald-100 transition-colors"
                     >
-                        {viewMode === 'hole' ? 'View Card' : 'Enter Score'}
+                        {viewMode === 'hole' ? t('viewCard') : t('enterScore')}
                     </button>
                 </div>
 
@@ -197,10 +199,10 @@ export default function MobileScoringPage() {
                         {/* Hole Info Header */}
                         <div className="bg-gray-900 text-white p-6 text-center relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-green-500"></div>
-                            <h2 className="text-4xl font-black mb-1">HOLE {currentHole}</h2>
+                            <h2 className="text-4xl font-black mb-1">{t('hole')} {currentHole}</h2>
                             <div className="flex justify-center gap-4 text-gray-400 text-sm font-medium tracking-widest uppercase">
-                                <span>Par {currentPar}</span>
-                                {course.distances && <span>{course.distances[currentHole - 1]} Yds</span>}
+                                <span>{t('par')} {currentPar}</span>
+                                {course.distances && <span>{course.distances[currentHole - 1]} {t('yards')}</span>}
                             </div>
                         </div>
 
@@ -220,7 +222,7 @@ export default function MobileScoringPage() {
                                 disabled={currentHole === 1}
                                 className="flex items-center text-gray-600 hover:text-emerald-600 disabled:opacity-30 font-medium transition-colors"
                             >
-                                <ChevronLeft className="mr-1" /> Prev
+                                <ChevronLeft className="mr-1" /> {t('prev')}
                             </button>
 
                             <div className="flex gap-1 h-1.5">
@@ -237,7 +239,7 @@ export default function MobileScoringPage() {
                                 disabled={currentHole === 18}
                                 className="flex items-center text-gray-600 hover:text-emerald-600 disabled:opacity-30 font-medium transition-colors"
                             >
-                                Next <ChevronRight className="ml-1" />
+                                {t('next')} <ChevronRight className="ml-1" />
                             </button>
                         </div>
                     </div>

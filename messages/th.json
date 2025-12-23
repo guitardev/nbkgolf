@@ -88,7 +88,10 @@
             "title": "ลงทะเบียนทัวร์นาเมนต์"
         },
         "enterScore": "กรอกคะแนนของคุณ",
-        "enterScoreMobile": "บันทึกคะแนน (มือถือ)"
+        "enterScoreMobile": "บันทึกคะแนน (มือถือ)",
+        "manageEasily": "จัดการทัวร์นาเมนต์ ผู้เล่น และสนามของคุณได้อย่างง่ายดาย",
+        "alreadyPlaying": "กำลังแข่งขันอยู่ใช่ไหม?",
+        "unknownTournament": "ไม่ระบุทัวร์นาเมนต์"
     },
     "players": {
         "title": "จัดการผู้เล่น",
@@ -197,7 +200,8 @@
             "double": "Double Bogey",
             "triple": "Triple Bogey",
             "other": "Other"
-        }
+        },
+        "exportExcel": "Export Excel"
     },
     "registrations": {
         "title": "จัดการการลงทะเบียน",
@@ -347,6 +351,40 @@
             "running": "กำลังดำเนินการ...",
             "success": "ดำเนินการสำเร็จ",
             "error": "เกิดข้อผิดพลาด"
+        }
+    },
+    "play": {
+        "noActiveTournament": "ไม่พบทัวร์นาเมนต์ที่กำลังดำเนินการ",
+        "noActiveTournamentDesc": "ไม่มีรายการแข่งขันที่กำลังดำเนินการอยู่ในขณะนี้",
+        "returnToDashboard": "กลับไปที่แดชบอร์ด",
+        "viewCard": "ดูสกอร์การ์ด",
+        "enterScore": "บันทึกคะแนน",
+        "hole": "หลุม",
+        "par": "พาร์",
+        "yards": "หลา",
+        "prev": "ก่อนหน้า",
+        "next": "ถัดไป",
+        "toasts": {
+            "noActiveFound": "ไม่พบทัวร์นาเมนต์ที่กำลังดำเนินการ",
+            "loadError": "ไม่สามารถโหลดข้อมูลทัวร์นาเมนต์ได้",
+            "saveError": "บันทึกคะแนนไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อ"
+        }
+    },
+    "scoring": {
+        "totalScore": "คะแนนรวม",
+        "totalPar": "พาร์รวม",
+        "front9": "9 หลุมแรก",
+        "back9": "9 หลุมหลัง",
+        "enterScore": "บันทึกคะแนน",
+        "terms": {
+            "holeInOne": "โฮลอินวัน!",
+            "albatross": "อัลบาทรอส",
+            "eagle": "อีเกิล",
+            "birdie": "เบอร์ดี้",
+            "par": "พาร์",
+            "bogey": "โบกี้",
+            "doubleBogey": "ดับเบิลโบกี้",
+            "tripleBogey": "ทริปเปิลโบกี้"
         }
     }
 }

@@ -10,6 +10,7 @@ interface DigitalScorecardProps {
 }
 
 export default function DigitalScorecard({ scores, pars, currentHole, onHoleSelect }: DigitalScorecardProps) {
+    const t = useTranslations('scoring');
     // Note: pars input array is usually 0-indexed for hole 1..18, so pars[0] is Hole 1
 
     const frontNine = Array.from({ length: 9 }, (_, i) => i + 1);
@@ -54,7 +55,7 @@ export default function DigitalScorecard({ scores, pars, currentHole, onHoleSele
             >
                 <span className="text-[10px] uppercase text-gray-500 font-bold tracking-wider">H{hole}</span>
                 <span className={`text-xl font-bold ${textClass}`}>{score || '-'}</span>
-                <span className="text-[10px] text-gray-400">Par {par}</span>
+                <span className="text-[10px] text-gray-400">{t('terms.par')} {par}</span>
             </button>
         );
     };
@@ -67,21 +68,21 @@ export default function DigitalScorecard({ scores, pars, currentHole, onHoleSele
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
                 <div className="flex justify-between items-end mb-4">
                     <div>
-                        <p className="text-sm text-gray-500">Total Score</p>
+                        <p className="text-sm text-gray-500">{t('totalScore')}</p>
                         <p className="text-3xl font-bold text-gray-900">{totalScore > 0 ? totalScore : '-'}</p>
                     </div>
                     <div className="text-right">
-                        <p className="text-xs text-gray-400">Total Par</p>
+                        <p className="text-xs text-gray-400">{t('totalPar')}</p>
                         <p className="text-sm font-medium text-gray-600">{totalPar}</p>
                     </div>
                 </div>
 
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Front Nine</h4>
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{t('front9')}</h4>
                 <div className="grid grid-cols-5 gap-2 mb-6">
                     {frontNine.map(renderHoleRef)}
                 </div>
 
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Back Nine</h4>
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{t('back9')}</h4>
                 <div className="grid grid-cols-5 gap-2">
                     {backNine.map(renderHoleRef)}
                 </div>

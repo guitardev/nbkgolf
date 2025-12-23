@@ -103,7 +103,7 @@ export default function Dashboard() {
                         {t('welcome', { name: memberProfile?.name || user.displayName || 'Golfer' })}
                     </h1>
                     <p className="text-emerald-100 text-lg relative z-10">
-                        {isAdmin ? "Manage your tournaments, players, and courses with ease." : t('welcomeGuest')}
+                        {isAdmin ? t('manageEasily') : t('welcomeGuest')}
                     </p>
                 </div>
 
@@ -198,7 +198,7 @@ export default function Dashboard() {
                                                             <p className="text-sm text-gray-500">{displayEmail}</p>
                                                             <p className="text-xs text-emerald-600 flex items-center gap-1 mt-0.5">
                                                                 <Trophy className="w-3 h-3" />
-                                                                {tournaments.find(t => t.id === reg.tournamentId)?.name || 'Unknown Tournament'}
+                                                                {tournaments.find(t => t.id === reg.tournamentId)?.name || t('unknownTournament')}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -295,8 +295,31 @@ export default function Dashboard() {
                             <ArrowRight className="w-5 h-5" />
                         </Link>
 
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8 text-left">
+                            <Link
+                                href={`/${locale}/dashboard/tournaments`}
+                                className="p-4 bg-blue-50 border border-blue-100 rounded-xl hover:shadow-md transition-all flex items-center justify-between group"
+                            >
+                                <span className="text-blue-700 font-medium flex items-center gap-2">
+                                    <Trophy className="w-5 h-5" />
+                                    {t('createTournament')}
+                                </span>
+                                <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <Link
+                                href={`/${locale}/dashboard/courses`}
+                                className="p-4 bg-purple-50 border border-purple-100 rounded-xl hover:shadow-md transition-all flex items-center justify-between group"
+                            >
+                                <span className="text-purple-700 font-medium flex items-center gap-2">
+                                    <Flag className="w-5 h-5" />
+                                    {t('manageCourses')}
+                                </span>
+                                <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
+
                         <div className="mt-4 pt-6 border-t border-gray-100">
-                            <p className="text-gray-500 mb-4 text-sm">Already playing?</p>
+                            <p className="text-gray-500 mb-4 text-sm">{t('alreadyPlaying')}</p>
                             <Link
                                 href={`/${locale}/play`}
                                 className="inline-flex items-center gap-2 bg-white text-emerald-600 border-2 border-emerald-600 px-8 py-3 rounded-xl font-bold hover:bg-emerald-50 transition-all"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from 'next-intl';
 import { Minus, Plus, Circle } from 'lucide-react';
 
 interface HoleInputProps {
@@ -9,6 +10,7 @@ interface HoleInputProps {
 }
 
 export default function HoleInput({ par, score, onChange }: HoleInputProps) {
+    const t = useTranslations('scoring');
     const currentScore = score || par; // Default to par if no score
 
     const handleIncrement = () => onChange(currentScore + 1);
@@ -26,14 +28,14 @@ export default function HoleInput({ par, score, onChange }: HoleInputProps) {
 
     const getScoreLabel = (s: number, p: number) => {
         const diff = s - p;
-        if (s === 1) return 'Hole in One!';
-        if (diff <= -3) return 'Albatross';
-        if (diff === -2) return 'Eagle';
-        if (diff === -1) return 'Birdie';
-        if (diff === 0) return 'Par';
-        if (diff === 1) return 'Bogey';
-        if (diff === 2) return 'Double Bogey';
-        if (diff === 3) return 'Triple Bogey';
+        if (s === 1) return t('terms.holeInOne');
+        if (diff <= -3) return t('terms.albatross');
+        if (diff === -2) return t('terms.eagle');
+        if (diff === -1) return t('terms.birdie');
+        if (diff === 0) return t('terms.par');
+        if (diff === 1) return t('terms.bogey');
+        if (diff === 2) return t('terms.doubleBogey');
+        if (diff === 3) return t('terms.tripleBogey');
         return `${diff > 0 ? '+' : ''}${diff}`;
     };
 
@@ -41,7 +43,7 @@ export default function HoleInput({ par, score, onChange }: HoleInputProps) {
         <div className="flex flex-col items-center space-y-6 py-4">
             <div className="text-center space-y-1">
                 <span className={`text-xl font-medium ${getScoreColor(currentScore, par)}`}>
-                    {score ? getScoreLabel(currentScore, par) : 'Enter Score'}
+                    {score ? getScoreLabel(currentScore, par) : t('enterScore')}
                 </span>
             </div>
 
@@ -75,8 +77,8 @@ export default function HoleInput({ par, score, onChange }: HoleInputProps) {
                         key={quickScore}
                         onClick={() => onChange(quickScore)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${score === quickScore
-                                ? 'bg-emerald-600 text-white shadow-md'
-                                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                            ? 'bg-emerald-600 text-white shadow-md'
+                            : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                             }`}
                     >
                         {quickScore}

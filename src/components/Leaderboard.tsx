@@ -96,7 +96,7 @@ export default function Leaderboard({ tournamentId }: LeaderboardProps) {
                     onClick={handleExport}
                     className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                 >
-                    Export Excel
+                    {t('exportExcel')}
                 </button>
             </div>
             <div className="border-t border-gray-200 overflow-x-auto">

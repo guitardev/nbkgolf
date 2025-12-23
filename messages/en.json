@@ -88,7 +88,10 @@
             "title": "Tournament Registrations"
         },
         "enterScore": "Enter Your Score",
-        "enterScoreMobile": "Enter Score (Mobile)"
+        "enterScoreMobile": "Enter Score (Mobile)",
+        "manageEasily": "Manage your tournaments, players, and courses with ease.",
+        "alreadyPlaying": "Already playing?",
+        "unknownTournament": "Unknown Tournament"
     },
     "players": {
         "title": "Players Management",
@@ -197,7 +200,8 @@
             "double": "Double Bogey",
             "triple": "Triple Bogey",
             "other": "Other"
-        }
+        },
+        "exportExcel": "Export Excel"
     },
     "registrations": {
         "title": "Registrations Management",
@@ -347,6 +351,40 @@
             "running": "Processing...",
             "success": "Operation successful.",
             "error": "Operation failed."
+        }
+    },
+    "play": {
+        "noActiveTournament": "No Active Tournament",
+        "noActiveTournamentDesc": "There is no tournament currently in progress.",
+        "returnToDashboard": "Return to Dashboard",
+        "viewCard": "View Card",
+        "enterScore": "Enter Score",
+        "hole": "HOLE",
+        "par": "Par",
+        "yards": "Yds",
+        "prev": "Prev",
+        "next": "Next",
+        "toasts": {
+            "noActiveFound": "No active tournament found",
+            "loadError": "Failed to load tournament data",
+            "saveError": "Failed to save score. Please check connection."
+        }
+    },
+    "scoring": {
+        "totalScore": "Total Score",
+        "totalPar": "Total Par",
+        "front9": "Front Nine",
+        "back9": "Back Nine",
+        "enterScore": "Enter Score",
+        "terms": {
+            "holeInOne": "Hole in One!",
+            "albatross": "Albatross",
+            "eagle": "Eagle",
+            "birdie": "Birdie",
+            "par": "Par",
+            "bogey": "Bogey",
+            "doubleBogey": "Double Bogey",
+            "tripleBogey": "Triple Bogey"
         }
     }
 }
