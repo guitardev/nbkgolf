@@ -25,7 +25,7 @@ interface Tournament {
 }
 
 export default function MyTournamentsPage() {
-    const { user, memberProfile, isLoading: authLoading } = useAuth();
+    const { user, memberProfile, isLoading: authLoading, isAdmin } = useAuth();
     const t = useTranslations('myTournaments');
     const tCommon = useTranslations('common');
     const locale = useLocale();
@@ -57,19 +57,39 @@ export default function MyTournamentsPage() {
     }, [user, memberProfile, authLoading, locale, router]);
 
     const fetchData = async () => {
-        if (!memberProfile) return; // Should be handled by redirect, but safety check
+        if (!memberProfile && !isAdmin) return; // Should be handled by redirect, but safety check
 
         try {
             const [registrationsRes, tournamentsRes] = await Promise.all([
-                fetch(`/api/tournament-players?playerId=${memberProfile.id}`),
+                !isAdmin
+                    ? fetch(`/api/tournament-players?playerId=${memberProfile?.id}`)
+                    : Promise.resolve({ json: () => [] }), // Skip fetching specific registrations for admin
                 fetch('/api/tournaments')
             ]);
 
             const registrations = await registrationsRes.json();
             const tournamentsData = await tournamentsRes.json();
 
-            setMyRegistrations(Array.isArray(registrations) ? registrations : []);
             setTournaments(tournamentsData);
+
+            if (isAdmin) {
+                // For admin, show ALL tournaments as if they are registrations
+                // This allows them to see the card and click "Enter Score"
+                const adminViewRegistrations: TournamentPlayer[] = tournamentsData.map((t: Tournament) => ({
+                    id: `admin-${t.id}`,
+                    tournamentId: t.id,
+                    playerId: memberProfile?.id || 'admin',
+                    team: t.status === 'upcoming' ? 'Not Started' : t.status,
+                    registeredAt: new Date().toISOString(),
+                    status: 'admin_view'
+                }));
+                // Sort by date (newest first) same as API usually does or client side sort?
+                // The API might not sort, but let's just set it.
+                // Actually, let's filter to match normal behavior if needed, but "All" is "All".
+                setMyRegistrations(adminViewRegistrations);
+            } else {
+                setMyRegistrations(Array.isArray(registrations) ? registrations : []);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -210,9 +230,10 @@ export default function MyTournamentsPage() {
                                                 <div className="mt-2">
                                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${registration.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                                                         registration.status === 'withdrawn' ? 'bg-red-100 text-red-800' :
-                                                            'bg-yellow-100 text-yellow-800'
+                                                            registration.status === 'admin_view' ? 'bg-purple-100 text-purple-800' :
+                                                                'bg-yellow-100 text-yellow-800'
                                                         }`}>
-                                                        {registration.status}
+                                                        {registration.status === 'admin_view' ? 'Admin View' : registration.status}
                                                     </span>
                                                 </div>
                                             </div>
