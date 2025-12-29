@@ -14,10 +14,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
     title: "NBK Golf Tournament",
     description: "Premium Golf Tournament Recording System",
-    icons: {
-        icon: '/logo.png',
-        apple: '/logo.png'
-    }
 };
 
 export function generateStaticParams() {
