@@ -43,7 +43,7 @@ export default function Home() {
           {/* Logo & Title */}
           <div className="space-y-6">
             <div className="mx-auto w-28 h-28 bg-white rounded-[2rem] flex items-center justify-center shadow-xl shadow-emerald-100 transform rotate-3 hover:rotate-0 transition-all duration-500 border border-emerald-50 group">
-              <span className="text-6xl font-black bg-gradient-to-br from-emerald-500 to-teal-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">G</span>
+              <img src="/logo.png" alt="NBK Golf" className="w-20 h-20 object-contain rounded-xl group-hover:scale-110 transition-transform" />
             </div>
 
             <div className="space-y-2">

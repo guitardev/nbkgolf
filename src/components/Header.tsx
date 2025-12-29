@@ -33,9 +33,11 @@ export default function Header() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex-shrink-0 flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
-                                G
-                            </div>
+                            <img
+                                src="/logo.png"
+                                alt="NBK Golf"
+                                className="w-[46px] h-[46px] object-contain rounded-lg"
+                            />
                             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-green-800">
                                 NBK Golf
                             </span>
@@ -75,9 +77,11 @@ export default function Header() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
                     <Link href={`/${locale}/dashboard`} className="flex-shrink-0 flex items-center gap-2 group">
-                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-105 transition-transform">
-                            G
-                        </div>
+                        <img
+                            src="/logo.png"
+                            alt="NBK Golf"
+                            className="w-[46px] h-[46px] object-contain rounded-lg group-hover:scale-105 transition-transform"
+                        />
                         <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-green-800">
                             NBK Golf
                         </span>
