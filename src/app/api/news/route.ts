@@ -3,6 +3,7 @@ import Parser from 'rss-parser';
 
 // Define Interface for News Items
 interface NewsItem {
+    article_id: string;
     title: string;
     link: string;
     image_url?: string;
@@ -12,6 +13,8 @@ interface NewsItem {
 }
 
 export async function GET() {
+
+
     const parser = new Parser({
         headers: {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -19,59 +22,31 @@ export async function GET() {
         }
     });
 
-    // List of Thai Sports RSS Feeds
-    const FEEDS = [
-        { url: 'https://rss.sanook.com/rss/sport.xml', name: 'Sanook' },
-        { url: 'https://www.matichon.co.th/category/sport/sport-social/feed', name: 'Matichon' },
-        { url: 'https://www.thairath.co.th/rss/news/sport', name: 'Thairath' }
-    ];
-
-    // Keywords to filter for Golf content
-    const KEYWORDS = ['กอล์ฟ', 'Golf', 'lpga', 'pga', 'โปรจีน', 'โปรเม', 'โปรช้าง', 'โปรอาร์ม'];
+    // Use Google News RSS for reliable aggregation
+    // Query: "กอล์ฟ OR lpga OR pga" (Encoded)
+    const GOOGLE_NEWS_RSS = 'https://news.google.com/rss/search?q=%E0%B8%81%E0%B8%AD%E0%B8%A5%E0%B9%8C%E0%B8%9F+OR+lpga+OR+pga&hl=th&gl=TH&ceid=TH:th';
 
     try {
-        const fetchFeed = async (source: { url: string, name: string }) => {
-            try {
-                const feed = await parser.parseURL(source.url);
-                return feed.items.map(item => ({ ...item, sourceName: source.name }));
-            } catch (err) {
-                console.error(`Error fetching feed ${source.name}:`, err);
-                return [];
+        const feed = await parser.parseURL(GOOGLE_NEWS_RSS);
+
+        const newsResults: NewsItem[] = feed.items.map(item => {
+            // Extract image from description (Google News puts it in <a><img ...></a>)
+            let imageUrl = '';
+            const imgMatch = item.content?.match(/<img[^>]+src="([^">]+)"/) || item.contentSnippet?.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch) {
+                imageUrl = imgMatch[1];
             }
-        };
 
-        // Fetch all feeds in parallel
-        const allFeedItems = await Promise.all(FEEDS.map(fetchFeed));
-        const flatItems = allFeedItems.flat();
-
-        // Filter and Map items
-        const newsResults: NewsItem[] = flatItems
-            .filter(item => {
-                const title = item.title?.toLowerCase() || '';
-                const desc = item.contentSnippet?.toLowerCase() || item.content?.toLowerCase() || '';
-                return KEYWORDS.some(kw => title.includes(kw.toLowerCase()) || desc.includes(kw.toLowerCase()));
-            })
-            .map(item => {
-                // Extract image from content if possible (RSS often puts img in content:encoded or description)
-                let imageUrl = '';
-                if (item.enclosure && item.enclosure.url && item.enclosure.type?.startsWith('image')) {
-                    imageUrl = item.enclosure.url;
-                } else if (item.content) {
-                    const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-                    if (imgMatch) imageUrl = imgMatch[1];
-                }
-
-                return {
-                    title: item.title || 'No Title',
-                    link: item.link || '#',
-                    image_url: imageUrl || 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80', // Fallback golf image
-                    pubDate: item.pubDate || new Date().toISOString(),
-                    description: item.contentSnippet || item.content || '',
-                    source: item.sourceName as string
-                };
-            })
-            .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()) // Sort by newest
-            .slice(0, 10); // Limit to top 10 news
+            return {
+                article_id: item.guid || item.link || Math.random().toString(36).substr(2, 9),
+                title: item.title || 'No Title',
+                link: item.link || '#',
+                image_url: imageUrl || 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?auto=format&fit=crop&q=80',
+                pubDate: item.pubDate || new Date().toISOString(),
+                description: item.title || '', // Google News description is often just links, title is better
+                source: item.source?.trim() || 'Google News'
+            };
+        }).slice(0, 10);
 
         return NextResponse.json({
             status: 'success',
